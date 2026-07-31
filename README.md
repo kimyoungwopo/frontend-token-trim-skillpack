@@ -52,6 +52,8 @@ Find the narrow path → reuse existing code → make the smallest correct diff 
 
 Yes — you can benchmark token usage by running the same task twice: once normally and once with Frontend Token Trim. See [Token Usage Benchmark](docs/benchmark.md).
 
+Controlled benchmark result: **2,489 → 496 estimated tokens** (`-80.1%`) on a localized mobile overflow task. See [Controlled Benchmark Result](docs/benchmark-result-controlled.md).
+
 ```bash
 python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
 ```
@@ -134,6 +136,7 @@ Apply Frontend Token Trim:
 - [English documentation](docs/en.md)
 - [日本語ドキュメント](docs/ja.md)
 - [Token Usage Benchmark](docs/benchmark.md)
+- [Controlled Benchmark Result](docs/benchmark-result-controlled.md)
 
 ## Repository layout
 
