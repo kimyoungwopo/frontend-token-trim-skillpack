@@ -18,6 +18,23 @@
 | 検索結果・ログ・diff をそのまま貼る | ファイルマップと実行可能な証拠に圧縮する |
 | QA 前にコンテキストが足りなくなる | browser/mobile QA と修正のための余白を残す |
 
+## トークン差分の比較
+
+比較できます。同じフロントエンド作業を2回実行します。
+
+```txt
+A. baseline: 通常のフロントエンド指示
+B. frontend-token-trim: 同じ指示 + Frontend Token Trim contract
+```
+
+正確な値は provider/agent usage log の input/output/total tokens を使うのが最適です。transcript しかない場合は、概算用スクリプトを使えます。
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```
+
+詳しい方法は [Token Usage Benchmark](benchmark.md) を参照してください。
+
 ## インストールされるスキル
 
 ### `ponytail`

@@ -18,6 +18,23 @@ Frontend tasks usually waste tokens on unnecessary exploration, raw logs, and re
 | Raw search results/logs/diffs flood the chat | Compress to a file map and actionable evidence |
 | Context runs out before QA | Reserve headroom for browser/mobile verification and repair |
 
+## Token comparison
+
+You can compare token usage by running the same frontend task twice.
+
+```txt
+A. baseline: normal frontend instruction
+B. frontend-token-trim: same instruction + Frontend Token Trim contract
+```
+
+Use provider/agent usage logs for exact input/output/total tokens when available. If you only have transcripts, use the approximate estimator:
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```
+
+See [Token Usage Benchmark](benchmark.md) for the full method.
+
 ## Installed skills
 
 ### `ponytail`

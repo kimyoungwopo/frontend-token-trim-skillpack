@@ -18,6 +18,23 @@
 | 검색결과·로그·diff를 그대로 붙임 | 파일 맵과 핵심 에러만 압축 보고 |
 | QA 전에 컨텍스트가 부족해짐 | 모바일/브라우저 QA용 headroom 확보 |
 
+## 토큰 차이 비교
+
+비교할 수 있습니다. 같은 프론트엔드 작업을 두 번 실행하세요.
+
+```txt
+A. baseline: 일반 프론트엔드 지시
+B. frontend-token-trim: 같은 지시 + Frontend Token Trim contract
+```
+
+정확한 값은 provider/agent usage log의 input/output/total tokens를 쓰는 것이 가장 좋습니다. transcript만 있다면 대략 추정용 스크립트를 사용할 수 있습니다.
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```
+
+자세한 방법은 [Token Usage Benchmark](benchmark.md)를 참고하세요.
+
 ## 설치되는 스킬
 
 ### `ponytail`

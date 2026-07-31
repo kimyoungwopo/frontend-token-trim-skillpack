@@ -48,6 +48,16 @@ Find the narrow path → reuse existing code → make the smallest correct diff 
 | Spends context on raw logs and giant summaries | Compresses output and saves tokens for QA/repair |
 | Claims done before visual/mobile checks | Reports command/browser/viewport evidence and remaining risk |
 
+## Token comparison
+
+Yes — you can benchmark token usage by running the same task twice: once normally and once with Frontend Token Trim. See [Token Usage Benchmark](docs/benchmark.md).
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```
+
+Use provider/agent usage logs when available; transcript estimates are only approximate because tokenization differs by model.
+
 ## Model / agent support
 
 This pack is **model-agnostic**. The installer is for Hermes Agent skills, but the workflow prompt can be reused with code-capable agents.
@@ -123,6 +133,7 @@ Apply Frontend Token Trim:
 - [한국어 설명](docs/ko.md)
 - [English documentation](docs/en.md)
 - [日本語ドキュメント](docs/ja.md)
+- [Token Usage Benchmark](docs/benchmark.md)
 
 ## Repository layout
 
@@ -143,6 +154,8 @@ docs/
   ja.md
 assets/
   frontend-token-trim-flow.svg
+scripts/
+  estimate_tokens.py
 templates/
   AGENTS.md
   CLAUDE.md
