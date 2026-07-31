@@ -81,8 +81,8 @@ source-path inspection、アクセシビリティ、認証/権限/data integrity
 | 環境 | 対応 | 使い方 |
 |---|---|---|
 | Hermes Agent | Native | `./install.sh` 後、`frontend-token-trim` をロード |
-| OpenAI / Codex-style | Prompt-compatible | task または project instructions に contract を貼る |
-| Anthropic / Claude-style | Prompt-compatible | task または project rules に contract を貼る |
+| OpenAI Codex / Codex CLI | `AGENTS.md` 対応 | `templates/AGENTS.md` をプロジェクトルートの `AGENTS.md` としてコピー、または contract を貼る |
+| Claude Code / Claude-style | `CLAUDE.md` 対応 | `templates/CLAUDE.md` をプロジェクトルートの `CLAUDE.md` としてコピー、または project rules に貼る |
 | Google Gemini-style | Prompt-compatible | task または repo instructions に contract を貼る |
 | OpenCode / terminal agents | Prompt-compatible | task prompt に contract と検証コマンドを書く |
 | Tool なし chat model | Limited | チェックリストとして有用。ただし自動検証は限定的 |
@@ -96,6 +96,20 @@ cd frontend-token-trim-skillpack
 ```
 
 インストール後、新しい Hermes セッションを開始してください。
+
+### Codex / Claude で使う場合
+
+Codex と Claude Code は Hermes の skill installer を直接使うのではなく、repo rule file として適用します。
+
+```bash
+# Codex / OpenAI coding agents
+cp templates/AGENTS.md /path/to/your-project/AGENTS.md
+
+# Claude Code / Claude-style coding agents
+cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
+```
+
+他のエージェントでは `templates/frontend-token-trim.md` を prompt に貼り付けてください。
 
 ## 使用例
 

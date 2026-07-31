@@ -88,8 +88,8 @@ route/page → component → hook/API/state → style/token → QA target
 | 환경 | 지원 | 사용법 |
 |---|---|---|
 | Hermes Agent | Native | `./install.sh` 후 `frontend-token-trim` 로드 |
-| OpenAI / Codex-style | Prompt-compatible | 작업 지시나 project instructions에 contract 붙여넣기 |
-| Anthropic / Claude-style | Prompt-compatible | task/project rule에 contract 붙여넣기 |
+| OpenAI Codex / Codex CLI | `AGENTS.md` 지원 | `templates/AGENTS.md`를 프로젝트 루트의 `AGENTS.md`로 복사하거나 contract를 붙여넣기 |
+| Claude Code / Claude-style | `CLAUDE.md` 지원 | `templates/CLAUDE.md`를 프로젝트 루트의 `CLAUDE.md`로 복사하거나 task/project rule에 붙여넣기 |
 | Google Gemini-style | Prompt-compatible | task/repo instructions에 contract 붙여넣기 |
 | OpenCode / terminal agents | Prompt-compatible | task prompt에 contract + 검증 명령 명시 |
 | Tool 없는 chat model | Limited | 체크리스트로는 유용하지만 자동 검증은 제한됨 |
@@ -103,6 +103,20 @@ cd frontend-token-trim-skillpack
 ```
 
 설치 후 새 Hermes 세션을 시작하세요.
+
+### Codex / Claude에 적용
+
+Codex와 Claude Code는 Hermes 스킬 설치 방식이 아니라 **repo rule 파일**로 적용합니다.
+
+```bash
+# Codex / OpenAI coding agents
+cp templates/AGENTS.md /path/to/your-project/AGENTS.md
+
+# Claude Code / Claude-style coding agents
+cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
+```
+
+다른 에이전트에는 `templates/frontend-token-trim.md` 내용을 prompt에 붙여넣으면 됩니다.
 
 ## 사용 예시
 

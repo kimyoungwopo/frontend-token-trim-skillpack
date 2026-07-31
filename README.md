@@ -51,8 +51,8 @@ This pack is **model-agnostic**. The installer is for Hermes Agent skills, but t
 | Environment / model family | Support | Usage |
 |---|---|---|
 | Hermes Agent | Native | Install with `./install.sh`, then load/use `frontend-token-trim`. |
-| OpenAI / Codex-style coding agents | Prompt-compatible | Paste the contract into task or project instructions. |
-| Anthropic / Claude-style coding agents | Prompt-compatible | Paste the contract into the task or project rules. |
+| OpenAI Codex / Codex CLI | Supported via `AGENTS.md` | Copy `templates/AGENTS.md` into your repo root, or paste the contract into task/project instructions. |
+| Claude Code / Claude-style coding agents | Supported via `CLAUDE.md` | Copy `templates/CLAUDE.md` into your repo root, or paste the contract into the task/project rules. |
 | Google Gemini-style coding agents | Prompt-compatible | Paste the contract into task or repo instructions. |
 | OpenCode / terminal coding agents | Prompt-compatible | Put the contract in the task prompt and keep verification commands explicit. |
 | Non-tool chat models | Limited | Useful as a checklist, but savings are smaller without file/search/edit/test tools. |
@@ -75,6 +75,20 @@ cp -R skills/software-development/{ponytail,graphify,headroom,frontend-token-tri
 ```
 
 Start a **new Hermes session** after installing so the skill loader sees the new skills.
+
+### Codex / Claude rule files
+
+For Codex or Claude Code, this repo includes ready-to-copy rule files:
+
+```bash
+# Codex / OpenAI coding agents
+cp templates/AGENTS.md /path/to/your-project/AGENTS.md
+
+# Claude Code / Claude-style coding agents
+cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
+```
+
+You can also paste `templates/frontend-token-trim.md` into any code-capable agent prompt.
 
 ## Use
 
@@ -119,6 +133,10 @@ docs/
   ko.md
   en.md
   ja.md
+templates/
+  AGENTS.md
+  CLAUDE.md
+  frontend-token-trim.md
 install.sh
 README.md
 LICENSE
