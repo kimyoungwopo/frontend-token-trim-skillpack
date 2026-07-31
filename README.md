@@ -1,82 +1,80 @@
 # Frontend Token Trim Skillpack
 
 <p align="center">
-  <strong>Ponytail + Graphify + Headroom for token-efficient frontend agents</strong>
+  <img src="assets/frontend-token-trim-flow.svg" alt="Frontend Token Trim workflow: Graphify, Ponytail, Headroom, verified result" width="920">
 </p>
 
 <p align="center">
-  <a href="https://github.com/kimyoungwopo/frontend-token-trim-skillpack/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
-  <img alt="Hermes Agent" src="https://img.shields.io/badge/Hermes%20Agent-skillpack-blue.svg">
-  <img alt="Frontend" src="https://img.shields.io/badge/frontend-token--trim-111827.svg">
-  <img alt="Languages" src="https://img.shields.io/badge/docs-KO%20%7C%20EN%20%7C%20JA-orange.svg">
+  <strong>Token-efficient frontend agent workflow</strong><br>
+  <span>Graphify the path · Ponytail the diff · Keep Headroom for QA</span>
 </p>
 
 <p align="center">
+  <a href="https://github.com/kimyoungwopo/frontend-token-trim-skillpack/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-22c55e.svg"></a>
+  <img alt="Hermes Agent" src="https://img.shields.io/badge/Hermes%20Agent-native-2563eb.svg">
+  <img alt="Codex" src="https://img.shields.io/badge/Codex-AGENTS.md-111827.svg">
+  <img alt="Claude" src="https://img.shields.io/badge/Claude-CLAUDE.md-8b5cf6.svg">
+  <img alt="OpenClaude" src="https://img.shields.io/badge/OpenClaude-OPENCLAUDE.md-f97316.svg">
+  <img alt="Languages" src="https://img.shields.io/badge/docs-KO%20%7C%20EN%20%7C%20JA-f59e0b.svg">
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#why-it-works">Why</a> ·
+  <a href="#benchmark">Benchmark</a> ·
+  <a href="#agent-support">Agent Support</a> ·
   <a href="docs/ko.md">한국어</a> ·
   <a href="docs/en.md">English</a> ·
   <a href="docs/ja.md">日本語</a>
 </p>
 
-<p align="center">
-  <img src="assets/frontend-token-trim-flow.svg" alt="Frontend Token Trim workflow: Graphify, Ponytail, Headroom, verified result" width="900">
-</p>
-
 ---
 
-## Overview
+## What is this?
 
-Frontend Token Trim is a Hermes Agent skillpack that installs four skills:
+**Frontend Token Trim** is a small skillpack for frontend coding agents. It reduces wasted context by forcing the agent to:
 
-- **`ponytail`** — minimal correct implementation: reuse existing code, avoid unrequested abstractions, keep diffs small.
-- **`graphify`** — map the narrow code path first: `route → component → data/style dependency → QA target`.
-- **`headroom`** — compress discovery/output so context remains available for verification and repair.
-- **`frontend-token-trim`** — the combined frontend workflow using all three behaviors.
+<table>
+<tr>
+<td width="33%">
 
-It is designed for frontend bug fixes, UI polish, responsive repairs, API-backed screens, and code reviews where context cost matters.
+### 1. Graphify
+
+Map the narrow code path before reading broadly.
 
 ```txt
-Find the narrow path → reuse existing code → make the smallest correct diff → reserve headroom for QA → report evidence only
+route → component → data/style → QA
 ```
 
-## Why it helps
+</td>
+<td width="33%">
 
-| Common failure mode | Frontend Token Trim behavior |
-|---|---|
-| Reads whole folders before locating the real path | Searches route/copy/component and maps the dependency path first |
-| Adds new helpers/components/tokens too early | Reuses existing components, hooks, API clients, styles, and tokens |
-| Turns a small fix into a broad refactor | Touches the fewest files that fix the real flow |
-| Spends context on raw logs and giant summaries | Compresses output and saves tokens for QA/repair |
-| Claims done before visual/mobile checks | Reports command/browser/viewport evidence and remaining risk |
+### 2. Ponytail
 
-## Token comparison
+Reuse existing code and make the smallest correct diff.
 
-Yes — you can benchmark token usage by running the same task twice: once normally and once with Frontend Token Trim. See [Token Usage Benchmark](docs/benchmark.md).
-
-Controlled benchmark result: **2,489 → 496 estimated tokens** (`-80.1%`) on a localized mobile overflow task. See [Controlled Benchmark Result](docs/benchmark-result-controlled.md).
-
-```bash
-python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```txt
+existing first → no broad refactor
 ```
 
-Use provider/agent usage logs when available; transcript estimates are only approximate because tokenization differs by model.
+</td>
+<td width="33%">
 
-## Model / agent support
+### 3. Headroom
 
-This pack is **model-agnostic**. The installer is for Hermes Agent skills, but the workflow prompt can be reused with code-capable agents.
+Compress logs/reports and save context for verification.
 
-| Environment / model family | Support | Usage |
-|---|---|---|
-| Hermes Agent | Native | Install with `./install.sh`, then load/use `frontend-token-trim`. |
-| OpenAI Codex / Codex CLI | Supported via `AGENTS.md` | Copy `templates/AGENTS.md` into your repo root, or paste the contract into task/project instructions. |
-| Claude Code / Claude-style coding agents | Supported via `CLAUDE.md` | Copy `templates/CLAUDE.md` into your repo root, or paste the contract into the task/project rules. |
-| OpenClaude / OpenClaude-style agents | Supported via `OPENCLAUDE.md` | Copy `templates/OPENCLAUDE.md` into your repo root, or paste the shared contract. |
-| Google Gemini-style coding agents | Prompt-compatible | Paste the contract into task or repo instructions. |
-| OpenCode / terminal coding agents | Prompt-compatible | Put the contract in the task prompt and keep verification commands explicit. |
-| Non-tool chat models | Limited | Useful as a checklist, but savings are smaller without file/search/edit/test tools. |
+```txt
+evidence > essays
+```
 
-Best results require file search, targeted file reads, file edits, lint/type/build/test execution, and browser/screenshot QA for visual frontend work.
+</td>
+</tr>
+</table>
 
-## Install
+## Quick Start
+
+### Hermes Agent
 
 ```bash
 git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
@@ -84,41 +82,28 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
-Manual copy:
+Then start a new Hermes session and ask:
 
-```bash
-mkdir -p ~/.hermes/skills/software-development
-cp -R skills/software-development/{ponytail,graphify,headroom,frontend-token-trim} ~/.hermes/skills/software-development/
+```txt
+frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
 ```
 
-Start a **new Hermes session** after installing so the skill loader sees the new skills.
+### Codex / Claude / OpenClaude
 
-### Codex / Claude rule files
-
-For Codex or Claude Code, this repo includes ready-to-copy rule files:
+Copy the matching rule file into your project root:
 
 ```bash
 # Codex / OpenAI coding agents
 cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
-# Claude Code / Claude-style coding agents
+# Claude Code / Claude-style agents
 cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
 
 # OpenClaude / OpenClaude-style agents
 cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
-You can also paste `templates/frontend-token-trim.md` into any code-capable agent prompt.
-
-## Use
-
-Hermes:
-
-```txt
-frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
-```
-
-Portable agent contract:
+Or paste the portable contract:
 
 ```txt
 Apply Frontend Token Trim:
@@ -130,31 +115,115 @@ Apply Frontend Token Trim:
 6) Final report: changed files, verification result, remaining risk only.
 ```
 
-## Documentation
+## Why it works
 
-- [한국어 설명](docs/ko.md)
-- [English documentation](docs/en.md)
-- [日本語ドキュメント](docs/ja.md)
+| Common token leak | What this pack changes |
+|---|---|
+| Agent reads `app/`, `components/`, `lib/` too broadly | Searches visible route/copy/class names first |
+| New helper/component/token gets created too early | Existing project pattern wins by default |
+| Small UI fix turns into a refactor | Fewest necessary files only |
+| Logs, diffs, and summaries flood context | File map + exact evidence only |
+| “Done” is claimed before mobile QA | Requires command/browser/viewport evidence |
+
+## Benchmark
+
+<p align="center">
+  <strong>Controlled result on a localized mobile overflow task</strong>
+</p>
+
+| Mode | Estimated tokens | Files read | Files changed | Verification |
+|---|---:|---:|---:|---|
+| Baseline broad browsing | 2,489 | 38 | 1 | lint, 390px browser |
+| Frontend Token Trim | 496 | 4 | 1 | lint, 320px + 390px browser |
+
+<p align="center">
+  <img alt="Token reduction" src="https://img.shields.io/badge/token%20reduction-80.1%25-22c55e?style=for-the-badge">
+</p>
+
+Read the full method:
+
 - [Token Usage Benchmark](docs/benchmark.md)
 - [Controlled Benchmark Result](docs/benchmark-result-controlled.md)
 
-## Repository layout
+Run your own estimate:
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
+```
+
+> Exact provider billing can differ by model/tokenizer. Use provider or agent usage logs when available.
+
+## Agent Support
+
+| Environment | Support | How to apply |
+|---|---|---|
+| Hermes Agent | Native skillpack | `./install.sh` |
+| OpenAI Codex / Codex CLI | Repo rules | `templates/AGENTS.md` |
+| Claude Code / Claude-style agents | Repo rules | `templates/CLAUDE.md` |
+| OpenClaude / OpenClaude-style agents | Repo rules | `templates/OPENCLAUDE.md` |
+| Gemini-style coding agents | Prompt-compatible | Paste `templates/frontend-token-trim.md` |
+| OpenCode / terminal agents | Prompt-compatible | Paste contract + explicit verification commands |
+| Non-tool chat models | Limited | Useful as checklist; no automatic file/test/browser QA |
+
+Best results require file search, targeted reads, edits, lint/type/build/test execution, and browser/screenshot QA for visual frontend work.
+
+## Installed Skills
+
+| Skill | Purpose | Prevents |
+|---|---|---|
+| [`ponytail`](skills/software-development/ponytail/SKILL.md) | Minimal correct implementation | Overengineering, new deps, unneeded abstractions |
+| [`graphify`](skills/software-development/graphify/SKILL.md) | Narrow code-path mapping | Repo-wide browsing, wrong-layer fixes |
+| [`headroom`](skills/software-development/headroom/SKILL.md) | Context/output budgeting | Long logs, giant summaries, no room for QA |
+| [`frontend-token-trim`](skills/software-development/frontend-token-trim/SKILL.md) | Combined frontend workflow | Unfocused frontend agent loops |
+
+## Documentation
+
+<table>
+<tr>
+<td width="33%">
+
+### 한국어
+
+설치, 사용법, 모델 지원, 토큰 비교 설명.
+
+[Read KO docs →](docs/ko.md)
+
+</td>
+<td width="33%">
+
+### English
+
+Usage, benefits, support matrix, benchmark method.
+
+[Read EN docs →](docs/en.md)
+
+</td>
+<td width="33%">
+
+### 日本語
+
+概要、使い方、モデル対応、比較方法。
+
+[Read JA docs →](docs/ja.md)
+
+</td>
+</tr>
+</table>
+
+## Repository Layout
 
 ```txt
 skills/software-development/
   ponytail/
-    SKILL.md
-    references/
   graphify/
-    SKILL.md
   headroom/
-    SKILL.md
   frontend-token-trim/
-    SKILL.md
 docs/
   ko.md
   en.md
   ja.md
+  benchmark.md
+  benchmark-result-controlled.md
 assets/
   frontend-token-trim-flow.svg
 scripts/
@@ -171,9 +240,9 @@ LICENSE
 
 ## Notes
 
-- Existing same-name skills are backed up by `install.sh` as `<skill>.backup-YYYYMMDD-HHMMSS`.
-- `ponytail` is MIT-adapted from DietrichGebert/ponytail; see `skills/software-development/ponytail/SKILL.md`.
-- This pack does not change your model, pricing, or context window. It changes how the agent spends context during frontend work.
+- Existing same-name Hermes skills are backed up by `install.sh` as `<skill>.backup-YYYYMMDD-HHMMSS`.
+- `ponytail` is MIT-adapted from DietrichGebert/ponytail; see [`SKILL.md`](skills/software-development/ponytail/SKILL.md).
+- This pack does not change your model, pricing, or context window. It changes **how the agent spends context**.
 
 ## License
 
