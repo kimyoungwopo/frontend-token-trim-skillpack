@@ -1,111 +1,77 @@
 # Frontend Token Trim Skillpack — 日本語
 
-[← README](../README.md) · [한국어](ko.md) · [English](en.md)
+<p align="center">
+  <img src="../assets/frontend-token-trim-flow.svg" alt="Frontend Token Trim workflow: Graphify, Ponytail, Headroom, verified result" width="920">
+</p>
+
+<p align="center">
+  <strong>フロントエンド系エージェントの無駄なトークン消費を減らすワークフロー</strong><br>
+  <span>Graphify で経路を絞り · Ponytail で最小変更にし · Headroom で QA 余白を残します</span>
+</p>
+
+<p align="center">
+  <a href="../README.md">README</a> ·
+  <a href="ko.md">한국어</a> ·
+  <a href="en.md">English</a> ·
+  <a href="benchmark.md">Benchmark</a> ·
+  <a href="benchmark-result-controlled.md">Result</a>
+</p>
+
+<p align="center">
+  <img alt="Hermes Agent" src="https://img.shields.io/badge/Hermes%20Agent-native-2563eb.svg">
+  <img alt="Codex" src="https://img.shields.io/badge/Codex-AGENTS.md-111827.svg">
+  <img alt="Claude" src="https://img.shields.io/badge/Claude-CLAUDE.md-8b5cf6.svg">
+  <img alt="OpenClaude" src="https://img.shields.io/badge/OpenClaude-OPENCLAUDE.md-f97316.svg">
+  <img alt="Token reduction" src="https://img.shields.io/badge/controlled%20benchmark--80.1%25-22c55e.svg">
+</p>
+
+---
 
 ## 一言でいうと
 
-**Ponytail + Graphify + Headroom** を組み合わせ、フロントエンド系エージェントが「読む量を減らし、変更量を減らし、検証をより正確にする」ための Hermes Agent スキルパックです。
+**Ponytail + Graphify + Headroom** を組み合わせ、フロントエンド系エージェントが **読む量を減らし、変更量を減らし、検証をより正確にする** ための Hermes Agent スキルパックです。
 
-## 何が良くなりますか？
+<table>
+<tr>
+<td width="33%">
 
-フロントエンド作業でトークンが無駄になる原因は、多くの場合、最終コードではなく **不要な探索・長いログ・手戻り** です。このパックは作業順序を変えます。
-
-| 問題 | 改善 |
-|---|---|
-| `app/` や `components/` 全体を早く読みすぎる | route/copy/component 検索で狭い経路を先に作る |
-| 既存の helper/component/token を見落として新しく作る | 既存パターンを先に再利用する |
-| 小さな UI 修正が大きなリファクタになる | 実際の flow を直す最小ファイルだけ触る |
-| 検索結果・ログ・diff をそのまま貼る | ファイルマップと実行可能な証拠に圧縮する |
-| QA 前にコンテキストが足りなくなる | browser/mobile QA と修正のための余白を残す |
-
-## トークン差分の比較
-
-比較できます。同じフロントエンド作業を2回実行します。
-
-```txt
-A. baseline: 通常のフロントエンド指示
-B. frontend-token-trim: 同じ指示 + Frontend Token Trim contract
-```
-
-正確な値は provider/agent usage log の input/output/total tokens を使うのが最適です。transcript しかない場合は、概算用スクリプトを使えます。
-
-```bash
-python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
-```
-
-詳しい方法は [Token Usage Benchmark](benchmark.md) を参照してください。
-
-## インストールされるスキル
-
-### `ponytail`
-
-- YAGNI
-- 既存コード優先
-- native HTML/CSS/platform feature 優先
-- 新規依存を避ける
-- shortest correct diff
-
-防ぐもの: 過剰設計、重複 helper、不要な抽象化、大きすぎるリファクタ。
-
-### `graphify`
+### Graphify
 
 実装前に小さなコード経路を作ります。
 
 ```txt
-route/page → component → hook/API/state → style/token → QA target
+route → component → data/style → QA
 ```
 
-例:
+</td>
+<td width="33%">
+
+### Ponytail
+
+既存コードと既存パターンを優先します。
 
 ```txt
-/app/(member)/program/page.tsx → ProgramViewer → useAssignedPrograms → program card CSS → /program at 390px
+existing first → smallest diff
 ```
 
-防ぐもの: 無関係なファイル読み、症状だけの修正、間違った層の修正。
+</td>
+<td width="33%">
 
-### `headroom`
+### Headroom
 
-探索結果・ログ・報告を圧縮し、検証と修正に使うコンテキストを残します。
-
-推奨される最終報告:
+ログ・報告を圧縮し、QA 用のコンテキストを残します。
 
 ```txt
-完了: <ユーザー視点の結果>
-変更: <主要ファイル/挙動>
-検証: <command/browser/viewport + result>
-リスク: <なし、または残った制限>
+evidence > long summary
 ```
 
-### `frontend-token-trim`
+</td>
+</tr>
+</table>
 
-3つのスキルをフロントエンド用ワークフローに統合します。
+## クイックスタート
 
-## 使う場面
-
-- フロントエンドのバグ修正
-- UI polish
-- モバイル/レスポンシブ overflow 修正
-- route/page/component 実装
-- API連携のある frontend flow
-- コンテキストコストを抑えたいコードレビュー
-
-## QAを省略するためのものではありません
-
-source-path inspection、アクセシビリティ、認証/権限/data integrity、lint/type/build/test、視覚作業の browser/mobile QA は必要です。
-
-## モデル / エージェント対応
-
-| 環境 | 対応 | 使い方 |
-|---|---|---|
-| Hermes Agent | Native | `./install.sh` 後、`frontend-token-trim` をロード |
-| OpenAI Codex / Codex CLI | `AGENTS.md` 対応 | `templates/AGENTS.md` をプロジェクトルートの `AGENTS.md` としてコピー、または contract を貼る |
-| Claude Code / Claude-style | `CLAUDE.md` 対応 | `templates/CLAUDE.md` をプロジェクトルートの `CLAUDE.md` としてコピー、または project rules に貼る |
-| OpenClaude / OpenClaude-style | `OPENCLAUDE.md` 対応 | `templates/OPENCLAUDE.md` をプロジェクトルートの `OPENCLAUDE.md` としてコピー、または contract を貼る |
-| Google Gemini-style | Prompt-compatible | task または repo instructions に contract を貼る |
-| OpenCode / terminal agents | Prompt-compatible | task prompt に contract と検証コマンドを書く |
-| Tool なし chat model | Limited | チェックリストとして有用。ただし自動検証は限定的 |
-
-## インストール
+### Hermes Agent
 
 ```bash
 git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
@@ -113,32 +79,87 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
-インストール後、新しい Hermes セッションを開始してください。
+新しい Hermes セッションで次のように依頼します。
 
-### Codex / Claude で使う場合
+```txt
+frontend-token-trim を適用して、このフロントエンド issue を修正してください。
+```
 
-Codex と Claude Code は Hermes の skill installer を直接使うのではなく、repo rule file として適用します。
+### Codex / Claude / OpenClaude
+
+プロジェクトルートに対応する rule file をコピーします。
 
 ```bash
 # Codex / OpenAI coding agents
 cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
-# Claude Code / Claude-style coding agents
+# Claude Code / Claude-style agents
 cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
 
 # OpenClaude / OpenClaude-style agents
 cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
-他のエージェントでは `templates/frontend-token-trim.md` を prompt に貼り付けてください。
+## 何が良くなりますか？
 
-## 使用例
+| トークンが無駄になる箇所 | このスキルパックの対応 |
+|---|---|
+| 実際の経路を見つける前に `app/`, `components/`, `lib/` を広く読む | route/copy/class 検索で狭い経路を先に作る |
+| 既存 component/hook/token を見落として新しく作る | 既存プロジェクトパターンを優先する |
+| 小さな UI 修正が大きなリファクタになる | 実際の flow を直す最小ファイルだけ触る |
+| 検索結果・ログ・diff が長くなりすぎる | ファイルマップと重要な証拠だけに圧縮する |
+| モバイル QA 前にコンテキストが足りなくなる | 320/390px 検証用の headroom を残す |
 
-```txt
-frontend-token-trim を適用して、このフロントエンド issue を修正してください。
+## 制御ベンチマーク
+
+<p align="center">
+  <strong>局所的な mobile overflow task での結果</strong>
+</p>
+
+| モード | 推定トークン | 読んだファイル | 変更ファイル | 検証 |
+|---|---:|---:|---:|---|
+| 通常 baseline | 2,489 | 38 | 1 | lint, 390px browser |
+| Frontend Token Trim | 496 | 4 | 1 | lint, 320px + 390px browser |
+
+<p align="center">
+  <img alt="Token reduction" src="https://img.shields.io/badge/token%20reduction-80.1%25-22c55e?style=for-the-badge">
+</p>
+
+詳しい方法:
+
+- [Token Usage Benchmark](benchmark.md)
+- [Controlled Benchmark Result](benchmark-result-controlled.md)
+
+自分で推定する場合:
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
 ```
 
-他のエージェント用 contract:
+> 実際の課金トークンは model/tokenizer によって変わります。可能であれば provider または agent usage log を基準にしてください。
+
+## インストールされるスキル
+
+| スキル | 役割 | 防ぐもの |
+|---|---|---|
+| [`ponytail`](../skills/software-development/ponytail/SKILL.md) | 最小の正しい実装 | 過剰設計、新規依存、不要な抽象化 |
+| [`graphify`](../skills/software-development/graphify/SKILL.md) | コード経路の絞り込み | repo-wide browsing、間違った層の修正 |
+| [`headroom`](../skills/software-development/headroom/SKILL.md) | コンテキスト/出力予算管理 | 長いログ、長文報告、QA 余白不足 |
+| [`frontend-token-trim`](../skills/software-development/frontend-token-trim/SKILL.md) | 3スキル統合 frontend loop | 焦点のぼけた frontend 作業ループ |
+
+## モデル / エージェント対応
+
+| 環境 | 対応 | 適用方法 |
+|---|---|---|
+| Hermes Agent | Native skillpack | `./install.sh` |
+| OpenAI Codex / Codex CLI | Repo rules | `templates/AGENTS.md` |
+| Claude Code / Claude-style | Repo rules | `templates/CLAUDE.md` |
+| OpenClaude / OpenClaude-style | Repo rules | `templates/OPENCLAUDE.md` |
+| Gemini-style coding agents | Prompt-compatible | `templates/frontend-token-trim.md` を貼る |
+| OpenCode / terminal agents | Prompt-compatible | contract + 検証コマンドを明記 |
+| Tool なし chat model | Limited | チェックリストとしては有用、自動検証は限定的 |
+
+## Portable contract
 
 ```txt
 Apply Frontend Token Trim:
@@ -149,3 +170,9 @@ Apply Frontend Token Trim:
 5) Verify exact affected route plus 320/390 mobile overflow; include command/screenshot evidence.
 6) Final report: changed files, verification result, remaining risk only.
 ```
+
+## 注意
+
+- トークン削減は検証省略ではありません。
+- accessibility、auth/permission、data integrity、lint/type/build/test は引き続き必要です。
+- 視覚作業では browser + 320/390px mobile QA まで確認して初めて意味があります。

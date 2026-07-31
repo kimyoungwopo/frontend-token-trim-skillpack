@@ -1,118 +1,77 @@
 # Frontend Token Trim Skillpack — 한국어
 
-[← README](../README.md) · [English](en.md) · [日本語](ja.md)
+<p align="center">
+  <img src="../assets/frontend-token-trim-flow.svg" alt="Frontend Token Trim workflow: Graphify, Ponytail, Headroom, verified result" width="920">
+</p>
 
-## 한 줄 설명
+<p align="center">
+  <strong>프론트엔드 에이전트의 토큰 낭비를 줄이는 작업 흐름</strong><br>
+  <span>Graphify로 경로를 좁히고 · Ponytail로 최소 수정하고 · Headroom으로 QA 여유를 남깁니다</span>
+</p>
 
-**Ponytail + Graphify + Headroom**을 합쳐서 프론트엔드 에이전트가 덜 읽고, 덜 고치고, 더 정확히 검증하게 만드는 Hermes Agent 스킬팩입니다.
+<p align="center">
+  <a href="../README.md">README</a> ·
+  <a href="en.md">English</a> ·
+  <a href="ja.md">日本語</a> ·
+  <a href="benchmark.md">Benchmark</a> ·
+  <a href="benchmark-result-controlled.md">Result</a>
+</p>
 
-## 무엇이 좋아지나요?
+<p align="center">
+  <img alt="Hermes Agent" src="https://img.shields.io/badge/Hermes%20Agent-native-2563eb.svg">
+  <img alt="Codex" src="https://img.shields.io/badge/Codex-AGENTS.md-111827.svg">
+  <img alt="Claude" src="https://img.shields.io/badge/Claude-CLAUDE.md-8b5cf6.svg">
+  <img alt="OpenClaude" src="https://img.shields.io/badge/OpenClaude-OPENCLAUDE.md-f97316.svg">
+  <img alt="Token reduction" src="https://img.shields.io/badge/controlled%20benchmark--80.1%25-22c55e.svg">
+</p>
 
-프론트엔드 작업에서 토큰은 보통 코드 작성보다 **불필요한 탐색·장문 로그·재작업**에서 많이 소모됩니다. 이 스킬팩은 작업 순서를 강제해서 토큰 누수를 줄입니다.
+---
 
-| 문제 | 개선 방식 |
-|---|---|
-| 실제 경로를 찾기 전에 `app/`, `components/`를 통째로 읽음 | route/copy/component 검색으로 좁은 코드 경로부터 만듦 |
-| 기존 컴포넌트/훅/토큰을 못 보고 새로 만듦 | 기존 패턴 우선 재사용 |
-| 작은 UI 수정이 큰 리팩터링으로 커짐 | 현재 플로우를 고치는 최소 파일만 수정 |
-| 검색결과·로그·diff를 그대로 붙임 | 파일 맵과 핵심 에러만 압축 보고 |
-| QA 전에 컨텍스트가 부족해짐 | 모바일/브라우저 QA용 headroom 확보 |
+## 한 줄 요약
 
-## 토큰 차이 비교
+**Ponytail + Graphify + Headroom**을 합쳐서 프론트엔드 에이전트가 **덜 읽고, 덜 고치고, 더 정확히 검증**하게 만드는 Hermes Agent 스킬팩입니다.
 
-비교할 수 있습니다. 같은 프론트엔드 작업을 두 번 실행하세요.
+<table>
+<tr>
+<td width="33%">
 
-```txt
-A. baseline: 일반 프론트엔드 지시
-B. frontend-token-trim: 같은 지시 + Frontend Token Trim contract
-```
+### Graphify
 
-정확한 값은 provider/agent usage log의 input/output/total tokens를 쓰는 것이 가장 좋습니다. transcript만 있다면 대략 추정용 스크립트를 사용할 수 있습니다.
-
-```bash
-python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
-```
-
-자세한 방법은 [Token Usage Benchmark](benchmark.md)를 참고하세요.
-
-## 설치되는 스킬
-
-### `ponytail`
-
-- YAGNI
-- 기존 코드 우선
-- native HTML/CSS/platform feature 우선
-- 새 dependency 최소화
-- shortest correct diff
-
-막아주는 것: 과설계, 중복 helper, 불필요한 abstraction, broad refactor.
-
-### `graphify`
-
-작업 전에 작은 코드 경로를 만듭니다.
+작업 전에 실제 코드 경로를 작게 만듭니다.
 
 ```txt
-route/page → component → hook/API/state → style/token → QA target
+route → component → data/style → QA
 ```
 
-예시:
+</td>
+<td width="33%">
+
+### Ponytail
+
+기존 코드와 패턴을 우선 재사용합니다.
 
 ```txt
-/app/(member)/program/page.tsx → ProgramViewer → useAssignedPrograms → program card CSS → /program at 390px
+existing first → smallest diff
 ```
 
-막아주는 것: 관련 없는 파일 읽기, 증상 leaf만 고치기, 잘못된 레이어 수정.
+</td>
+<td width="33%">
 
-### `headroom`
+### Headroom
 
-검색결과·로그·최종 보고를 압축하고 검증/수정용 컨텍스트를 남깁니다.
-
-최종 보고 기본형:
+로그/보고를 압축하고 QA용 컨텍스트를 남깁니다.
 
 ```txt
-완료: <사용자 관점 결과>
-변경: <핵심 파일/동작>
-검증: <명령/브라우저/뷰포트 + 결과>
-리스크: <없음 또는 남은 제한>
+evidence > long summary
 ```
 
-### `frontend-token-trim`
+</td>
+</tr>
+</table>
 
-위 세 가지를 프론트엔드 작업 루프로 합친 스킬입니다.
+## 빠른 설치
 
-## 언제 쓰나요?
-
-- 프론트엔드 버그 수정
-- UI polish
-- 모바일/반응형 overflow 수정
-- route/page/component 구현
-- API-backed frontend flow
-- 코드 리뷰
-- Discord/Hermes에서 짧은 한국어 evidence report가 필요할 때
-
-## 주의
-
-이 스킬팩은 검증 생략용이 아닙니다. 다음은 여전히 필요합니다.
-
-- 실제 코드 경로 확인
-- 접근성: label, focus-visible, keyboard path, contrast, 44px touch target
-- 인증/권한/API/RLS/data integrity 확인
-- lint/type/build/test
-- 시각 작업의 경우 browser + 320/390 mobile QA
-
-## 모델/에이전트 지원
-
-| 환경 | 지원 | 사용법 |
-|---|---|---|
-| Hermes Agent | Native | `./install.sh` 후 `frontend-token-trim` 로드 |
-| OpenAI Codex / Codex CLI | `AGENTS.md` 지원 | `templates/AGENTS.md`를 프로젝트 루트의 `AGENTS.md`로 복사하거나 contract를 붙여넣기 |
-| Claude Code / Claude-style | `CLAUDE.md` 지원 | `templates/CLAUDE.md`를 프로젝트 루트의 `CLAUDE.md`로 복사하거나 task/project rule에 붙여넣기 |
-| OpenClaude / OpenClaude-style | `OPENCLAUDE.md` 지원 | `templates/OPENCLAUDE.md`를 프로젝트 루트의 `OPENCLAUDE.md`로 복사하거나 contract를 붙여넣기 |
-| Google Gemini-style | Prompt-compatible | task/repo instructions에 contract 붙여넣기 |
-| OpenCode / terminal agents | Prompt-compatible | task prompt에 contract + 검증 명령 명시 |
-| Tool 없는 chat model | Limited | 체크리스트로는 유용하지만 자동 검증은 제한됨 |
-
-## 설치
+### Hermes Agent
 
 ```bash
 git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
@@ -120,32 +79,87 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
-설치 후 새 Hermes 세션을 시작하세요.
+새 Hermes 세션에서 이렇게 사용합니다.
 
-### Codex / Claude에 적용
+```txt
+frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
+```
 
-Codex와 Claude Code는 Hermes 스킬 설치 방식이 아니라 **repo rule 파일**로 적용합니다.
+### Codex / Claude / OpenClaude
+
+프로젝트 루트에 맞는 rule 파일을 복사합니다.
 
 ```bash
 # Codex / OpenAI coding agents
 cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
-# Claude Code / Claude-style coding agents
+# Claude Code / Claude-style agents
 cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
 
 # OpenClaude / OpenClaude-style agents
 cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
-다른 에이전트에는 `templates/frontend-token-trim.md` 내용을 prompt에 붙여넣으면 됩니다.
+## 무엇이 좋아지나요?
 
-## 사용 예시
+| 토큰이 새는 지점 | 이 스킬팩의 대응 |
+|---|---|
+| 실제 경로를 찾기 전에 `app/`, `components/`, `lib/`를 넓게 읽음 | route/copy/class 검색으로 좁은 경로부터 만듦 |
+| 기존 컴포넌트/훅/토큰을 못 보고 새로 만듦 | 기존 프로젝트 패턴을 우선 재사용 |
+| 작은 UI 수정이 큰 리팩터링으로 커짐 | 현재 플로우를 고치는 최소 파일만 수정 |
+| 검색결과·로그·diff를 그대로 길게 붙임 | 파일 맵과 핵심 증거만 압축 |
+| 모바일 QA 전에 컨텍스트가 부족해짐 | 320/390px 검증용 headroom 확보 |
 
-```txt
-frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
+## 통제 벤치마크
+
+<p align="center">
+  <strong>지역화된 모바일 overflow 작업 기준</strong>
+</p>
+
+| 모드 | 추정 토큰 | 읽은 파일 | 수정 파일 | 검증 |
+|---|---:|---:|---:|---|
+| 일반 baseline | 2,489 | 38 | 1 | lint, 390px browser |
+| Frontend Token Trim | 496 | 4 | 1 | lint, 320px + 390px browser |
+
+<p align="center">
+  <img alt="Token reduction" src="https://img.shields.io/badge/token%20reduction-80.1%25-22c55e?style=for-the-badge">
+</p>
+
+자세한 내용:
+
+- [Token Usage Benchmark](benchmark.md)
+- [Controlled Benchmark Result](benchmark-result-controlled.md)
+
+직접 추정하려면:
+
+```bash
+python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript.txt
 ```
 
-다른 에이전트용 contract:
+> 실제 청구 토큰은 모델/토크나이저별로 다를 수 있습니다. 가능하면 provider 또는 agent usage log를 기준으로 보세요.
+
+## 설치되는 스킬
+
+| 스킬 | 역할 | 막아주는 것 |
+|---|---|---|
+| [`ponytail`](../skills/software-development/ponytail/SKILL.md) | 최소 올바른 구현 | 과설계, 새 dependency, 불필요한 abstraction |
+| [`graphify`](../skills/software-development/graphify/SKILL.md) | 코드 경로 좁히기 | repo-wide browsing, 잘못된 레이어 수정 |
+| [`headroom`](../skills/software-development/headroom/SKILL.md) | 컨텍스트/출력 예산 관리 | 긴 로그, 장문 보고, QA 여유 부족 |
+| [`frontend-token-trim`](../skills/software-development/frontend-token-trim/SKILL.md) | 세 스킬 통합 프론트엔드 루프 | 산만한 프론트엔드 작업 루프 |
+
+## 모델/에이전트 지원
+
+| 환경 | 지원 | 적용 방법 |
+|---|---|---|
+| Hermes Agent | Native skillpack | `./install.sh` |
+| OpenAI Codex / Codex CLI | Repo rules | `templates/AGENTS.md` |
+| Claude Code / Claude-style | Repo rules | `templates/CLAUDE.md` |
+| OpenClaude / OpenClaude-style | Repo rules | `templates/OPENCLAUDE.md` |
+| Gemini-style coding agents | Prompt-compatible | `templates/frontend-token-trim.md` 붙여넣기 |
+| OpenCode / terminal agents | Prompt-compatible | contract + 검증 명령 명시 |
+| Tool 없는 chat model | Limited | 체크리스트로만 유용, 자동 검증 제한 |
+
+## 휴대용 contract
 
 ```txt
 Apply Frontend Token Trim:
@@ -156,3 +170,9 @@ Apply Frontend Token Trim:
 5) Verify exact affected route plus 320/390 mobile overflow; include command/screenshot evidence.
 6) Final report: changed files, verification result, remaining risk only.
 ```
+
+## 주의
+
+- 토큰 절감은 검증 생략이 아닙니다.
+- 접근성, 인증/권한, data integrity, lint/type/build/test는 여전히 필요합니다.
+- 시각 작업은 browser + 320/390px 모바일 QA까지 확인해야 의미 있습니다.
