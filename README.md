@@ -115,6 +115,33 @@ Apply Frontend Token Trim:
 6) Final report: changed files, verification result, remaining risk only.
 ```
 
+## How it works
+
+<p align="center">
+  <img src="assets/frontend-token-trim-loop.svg" alt="Frontend Token Trim step-by-step loop from issue to graphify, ponytail, headroom, verification, report, and repair loop" width="920">
+</p>
+
+```mermaid
+flowchart LR
+  A[User frontend issue] --> B[Graphify narrow path]
+  B --> C[Read connected files only]
+  C --> D[Ponytail smallest correct diff]
+  D --> E[Headroom compress logs/reports]
+  E --> F[Verify lint/type/build/browser]
+  F --> G{Passed?}
+  G -- yes --> H[Concise evidence report]
+  G -- no --> B
+```
+
+| Step | Agent behavior | Token-saving effect |
+|---|---|---|
+| 1. Issue intake | Use route, visible copy, screenshot, error, or component clue | Avoid vague repo browsing |
+| 2. Graphify | Map `route → component → hook/API/state → style/token → QA target` | Fewer files read |
+| 3. Ponytail | Reuse existing components/hooks/tokens and patch locally | Fewer files changed |
+| 4. Headroom | Compress search results, logs, diffs, and final report | More context left for QA |
+| 5. Verify | Run the smallest relevant checks and 320/390px visual QA when needed | Savings do not skip correctness |
+| 6. Repair loop | If verification fails, re-narrow the graph instead of expanding blindly | Prevents retry bloat |
+
 ## Why it works
 
 | Common token leak | What this pack changes |

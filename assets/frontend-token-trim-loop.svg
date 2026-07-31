@@ -1,0 +1,101 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">How Frontend Token Trim works</title>
+  <desc id="desc">A step-by-step flow from user issue to narrow graph, minimal patch, verification, and concise report.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617"/>
+      <stop offset="0.55" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c084fc"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.34"/></filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M2 2L12 7L2 12" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1280" height="720" rx="34" fill="url(#bg)"/>
+  <g opacity="0.46" stroke="#1e293b"><path d="M0 90H1280M0 180H1280M0 270H1280M0 360H1280M0 450H1280M0 540H1280M0 630H1280"/><path d="M128 0V720M256 0V720M384 0V720M512 0V720M640 0V720M768 0V720M896 0V720M1024 0V720M1152 0V720"/></g>
+  <text x="640" y="66" text-anchor="middle" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="36" font-weight="800">How Frontend Token Trim Works</text>
+  <text x="640" y="101" text-anchor="middle" fill="#94a3b8" font-family="Inter, ui-sans-serif, system-ui" font-size="18">Issue → narrow graph → smallest diff → verified report</text>
+
+  <path d="M258 214H332" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M548 214H622" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M838 214H912" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M1024 302V358" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M912 506H838" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M622 506H548" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M332 506H258" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M164 418V302" stroke="#334155" stroke-width="2.5" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="142" width="188" height="160" rx="22" fill="#0f172a" stroke="#334155"/>
+    <circle cx="106" cy="181" r="18" fill="url(#orange)"/>
+    <text x="136" y="188" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">1. Issue</text>
+    <text x="94" y="232" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">User asks for a</text>
+    <text x="94" y="254" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">frontend fix or QA</text>
+    <text x="94" y="279" fill="#64748b" font-family="Inter, ui-sans-serif, system-ui" font-size="12">route, copy, screenshot</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="332" y="142" width="216" height="160" rx="22" fill="#0f172a" stroke="#22d3ee"/>
+    <circle cx="370" cy="181" r="18" fill="url(#blue)"/>
+    <text x="400" y="188" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">2. Graphify</text>
+    <text x="356" y="232" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Search visible route,</text>
+    <text x="356" y="254" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">copy, component, class</text>
+    <text x="356" y="279" fill="#67e8f9" font-family="Inter, ui-sans-serif, system-ui" font-size="12">Read only connected files</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="622" y="142" width="216" height="160" rx="22" fill="#0f172a" stroke="#34d399"/>
+    <circle cx="660" cy="181" r="18" fill="url(#green)"/>
+    <text x="690" y="188" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">3. Ponytail</text>
+    <text x="646" y="232" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Reuse existing code,</text>
+    <text x="646" y="254" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">tokens, hooks, patterns</text>
+    <text x="646" y="279" fill="#86efac" font-family="Inter, ui-sans-serif, system-ui" font-size="12">Smallest correct patch</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="912" y="142" width="216" height="160" rx="22" fill="#0f172a" stroke="#c084fc"/>
+    <circle cx="950" cy="181" r="18" fill="url(#purple)"/>
+    <text x="980" y="188" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">4. Headroom</text>
+    <text x="936" y="232" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Compress search output,</text>
+    <text x="936" y="254" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">logs, diffs, final report</text>
+    <text x="936" y="279" fill="#ddd6fe" font-family="Inter, ui-sans-serif, system-ui" font-size="12">Keep context for repair</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="912" y="418" width="216" height="160" rx="22" fill="#0f172a" stroke="#fbbf24"/>
+    <circle cx="950" cy="457" r="18" fill="url(#orange)"/>
+    <text x="980" y="464" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">5. Verify</text>
+    <text x="936" y="508" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Run lint/type/build/test</text>
+    <text x="936" y="530" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">and 320/390px QA</text>
+    <text x="936" y="555" fill="#fde68a" font-family="Inter, ui-sans-serif, system-ui" font-size="12">No QA skip for token saving</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="622" y="418" width="216" height="160" rx="22" fill="#0f172a" stroke="#22c55e"/>
+    <circle cx="660" cy="457" r="18" fill="#22c55e"/>
+    <text x="690" y="464" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">6. Report</text>
+    <text x="646" y="508" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Changed files, evidence,</text>
+    <text x="646" y="530" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">remaining risk only</text>
+    <text x="646" y="555" fill="#86efac" font-family="Inter, ui-sans-serif, system-ui" font-size="12">Short Korean final works well</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="332" y="418" width="216" height="160" rx="22" fill="#0f172a" stroke="#64748b"/>
+    <circle cx="370" cy="457" r="18" fill="#64748b"/>
+    <text x="400" y="464" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui" font-size="20" font-weight="800">7. If failing</text>
+    <text x="356" y="508" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Do not read broadly.</text>
+    <text x="356" y="530" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="14">Re-narrow the graph.</text>
+    <text x="356" y="555" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui" font-size="12">Loop back only with evidence</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="418" width="188" height="160" rx="22" fill="#f8fafc"/>
+    <text x="164" y="466" text-anchor="middle" fill="#0f172a" font-family="Inter, ui-sans-serif, system-ui" font-size="22" font-weight="900">Done</text>
+    <text x="164" y="500" text-anchor="middle" fill="#334155" font-family="Inter, ui-sans-serif, system-ui" font-size="14">verified frontend fix</text>
+    <rect x="109" y="524" width="110" height="30" rx="15" fill="#dcfce7"/>
+    <text x="164" y="545" text-anchor="middle" fill="#166534" font-family="Inter, ui-sans-serif, system-ui" font-size="13" font-weight="800">low waste</text>
+  </g>
+</svg>

@@ -100,6 +100,33 @@ cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
 cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
+## どう動きますか？
+
+<p align="center">
+  <img src="../assets/frontend-token-trim-loop.svg" alt="Frontend Token Trim step-by-step loop" width="920">
+</p>
+
+```mermaid
+flowchart LR
+  A[Frontend issue] --> B[Graphify: narrow path]
+  B --> C[Read connected files only]
+  C --> D[Ponytail: smallest correct diff]
+  D --> E[Headroom: compress logs/reports]
+  E --> F[lint/type/build/browser QA]
+  F --> G{Passed?}
+  G -- yes --> H[Concise evidence report]
+  G -- no --> B
+```
+
+| ステップ | エージェントの動き | トークン削減効果 |
+|---|---|---|
+| 1. Issue intake | route、画面文言、screenshot、error、component の手がかりを拾う | ぼんやりした repo 探索を防ぐ |
+| 2. Graphify | `route → component → hook/API/state → style/token → QA target` を作る | 読むファイル数を減らす |
+| 3. Ponytail | 既存 component/hook/token を再利用し、局所 patch する | 変更ファイル数を減らす |
+| 4. Headroom | 検索結果、ログ、diff、最終報告を圧縮する | QA/修正用コンテキストを残す |
+| 5. Verify | 必要な最小チェックと 320/390px visual QA を行う | トークン削減が検証省略にならない |
+| 6. Repair loop | 失敗したら広げず、経路をもう一度絞る | 再試行トークンの膨張を防ぐ |
+
 ## 何が良くなりますか？
 
 | トークンが無駄になる箇所 | このスキルパックの対応 |

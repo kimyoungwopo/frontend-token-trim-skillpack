@@ -100,6 +100,33 @@ cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
 cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
+## 어떻게 돌아가나요?
+
+<p align="center">
+  <img src="../assets/frontend-token-trim-loop.svg" alt="Frontend Token Trim step-by-step loop" width="920">
+</p>
+
+```mermaid
+flowchart LR
+  A[프론트엔드 이슈] --> B[Graphify: 좁은 경로 만들기]
+  B --> C[연결된 파일만 읽기]
+  C --> D[Ponytail: 최소 올바른 수정]
+  D --> E[Headroom: 로그/보고 압축]
+  E --> F[lint/type/build/browser 검증]
+  F --> G{통과?}
+  G -- 예 --> H[짧은 증거 중심 보고]
+  G -- 아니오 --> B
+```
+
+| 단계 | 에이전트 행동 | 토큰 절감 효과 |
+|---|---|---|
+| 1. 이슈 입력 | route, 화면 문구, screenshot, error, component 단서만 잡음 | 막연한 repo 탐색 방지 |
+| 2. Graphify | `route → component → hook/API/state → style/token → QA target` 맵 작성 | 읽는 파일 수 감소 |
+| 3. Ponytail | 기존 component/hook/token 재사용 후 로컬 패치 | 수정 파일 수 감소 |
+| 4. Headroom | 검색결과, 로그, diff, 최종 보고 압축 | QA/수정용 컨텍스트 확보 |
+| 5. Verify | 필요한 최소 검사와 320/390px 시각 QA 수행 | 토큰 절감이 검증 생략으로 변질되는 것 방지 |
+| 6. Repair loop | 실패하면 무작정 더 읽지 않고 경로를 다시 좁힘 | 재시도 토큰 폭증 방지 |
+
 ## 무엇이 좋아지나요?
 
 | 토큰이 새는 지점 | 이 스킬팩의 대응 |
