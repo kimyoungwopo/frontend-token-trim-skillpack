@@ -269,9 +269,9 @@ LICENSE
 ## Notes
 
 - Existing same-name Hermes skills are backed up by `install.sh` as `<skill>.backup-YYYYMMDD-HHMMSS`.
-- `ponytail` is MIT-adapted from DietrichGebert/ponytail; see [`SKILL.md`](skills/software-development/ponytail/SKILL.md).
+- `ponytail` is MIT-adapted from DietrichGebert/ponytail; see [`SKILL.md`](skills/software-development/ponytail/SKILL.md) and [`NOTICE.md`](NOTICE.md).
 - This pack does not change your model, pricing, or context window. It changes **how the agent spends context**.
 
 ## License
 
-MIT
+MIT. Third-party attribution is listed in [`NOTICE.md`](NOTICE.md).
