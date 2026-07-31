@@ -83,6 +83,7 @@ source-path inspection、アクセシビリティ、認証/権限/data integrity
 | Hermes Agent | Native | `./install.sh` 後、`frontend-token-trim` をロード |
 | OpenAI Codex / Codex CLI | `AGENTS.md` 対応 | `templates/AGENTS.md` をプロジェクトルートの `AGENTS.md` としてコピー、または contract を貼る |
 | Claude Code / Claude-style | `CLAUDE.md` 対応 | `templates/CLAUDE.md` をプロジェクトルートの `CLAUDE.md` としてコピー、または project rules に貼る |
+| OpenClaude / OpenClaude-style | `OPENCLAUDE.md` 対応 | `templates/OPENCLAUDE.md` をプロジェクトルートの `OPENCLAUDE.md` としてコピー、または contract を貼る |
 | Google Gemini-style | Prompt-compatible | task または repo instructions に contract を貼る |
 | OpenCode / terminal agents | Prompt-compatible | task prompt に contract と検証コマンドを書く |
 | Tool なし chat model | Limited | チェックリストとして有用。ただし自動検証は限定的 |
@@ -107,6 +108,9 @@ cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
 # Claude Code / Claude-style coding agents
 cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
+
+# OpenClaude / OpenClaude-style agents
+cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
 他のエージェントでは `templates/frontend-token-trim.md` を prompt に貼り付けてください。

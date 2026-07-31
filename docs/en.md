@@ -84,6 +84,7 @@ You still need source-path inspection, accessibility basics, auth/security/data-
 | Hermes Agent | Native | Install with `./install.sh`, then load `frontend-token-trim` |
 | OpenAI Codex / Codex CLI | Supported via `AGENTS.md` | Copy `templates/AGENTS.md` to your repo root as `AGENTS.md`, or paste the contract into task/project instructions |
 | Claude Code / Claude-style | Supported via `CLAUDE.md` | Copy `templates/CLAUDE.md` to your repo root as `CLAUDE.md`, or paste the contract into task/project rules |
+| OpenClaude / OpenClaude-style | Supported via `OPENCLAUDE.md` | Copy `templates/OPENCLAUDE.md` to your repo root as `OPENCLAUDE.md`, or paste the shared contract |
 | Google Gemini-style | Prompt-compatible | Paste the contract into task or repo instructions |
 | OpenCode / terminal agents | Prompt-compatible | Put the contract in the task prompt and specify verification commands |
 | Non-tool chat models | Limited | Useful as a checklist, but automatic verification is limited |
@@ -108,6 +109,9 @@ cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
 # Claude Code / Claude-style coding agents
 cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
+
+# OpenClaude / OpenClaude-style agents
+cp templates/OPENCLAUDE.md /path/to/your-project/OPENCLAUDE.md
 ```
 
 For other agents, paste `templates/frontend-token-trim.md` into the prompt.
