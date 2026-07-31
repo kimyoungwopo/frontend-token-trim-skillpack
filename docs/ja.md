@@ -13,6 +13,7 @@
   <a href="../README.md">README</a> ·
   <a href="ko.md">한국어</a> ·
   <a href="en.md">English</a> ·
+  <a href="#どう動きますか">動作フロー</a> ·
   <a href="benchmark.md">Benchmark</a> ·
   <a href="benchmark-result-controlled.md">Result</a>
 </p>

@@ -20,6 +20,7 @@
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
+  <a href="#how-it-works">How it works</a> ·
   <a href="#why-it-works">Why</a> ·
   <a href="#benchmark">Benchmark</a> ·
   <a href="#agent-support">Agent Support</a> ·

@@ -1,6 +1,6 @@
 # Frontend Token Trim Skillpack — English
 
-[← README](../README.md) · [한국어](ko.md) · [日本語](ja.md)
+[← README](../README.md) · [한국어](ko.md) · [日本語](ja.md) · [How it works](#how-it-works)
 
 ## One-line summary
 
