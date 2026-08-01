@@ -15,7 +15,8 @@
   <a href="en.md">English</a> ·
   <a href="#どう動きますか">動作フロー</a> ·
   <a href="benchmark.md">Benchmark</a> ·
-  <a href="benchmark-result-controlled.md">Result</a>
+  <a href="benchmark-result-controlled.md">Result</a> ·
+  <a href="troubleshooting.md">Troubleshooting</a>
 </p>
 
 <p align="center">
@@ -216,6 +217,18 @@ Apply Frontend Token Trim:
 5) Verify exact affected route plus 320/390 mobile overflow; include command/screenshot evidence.
 6) Final report: changed files, verification result, remaining risk only.
 ```
+
+## ドキュメントと運用
+
+| ドキュメント | 用途 |
+|---|---|
+| [Agent setup](agent-setup.md) | Hermes, Codex, Claude, OpenClaude の適用方法 |
+| [Examples](examples.md) | そのまま使える frontend prompt 例 |
+| [Troubleshooting](troubleshooting.md) | install、update、重複 skill、template 問題の解決 |
+| [Update policy](update-policy.md) | `update.sh` と upstream sync PR の仕組み |
+| [Changelog](../CHANGELOG.md) | release history |
+| [Contributing](../CONTRIBUTING.md) | PR rules and validation checklist |
+| [Security](../SECURITY.md) | secret/credential handling and security report scope |
 
 ## 注意
 

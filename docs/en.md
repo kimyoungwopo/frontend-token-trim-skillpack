@@ -117,6 +117,18 @@ Combines the three skills into one frontend workflow.
 
 This repo does not silently auto-merge upstream prompt changes. Skill text changes can change agent behavior, so the automation creates a reviewable PR.
 
+## Docs and maintenance
+
+| Document | Purpose |
+|---|---|
+| [Agent setup](agent-setup.md) | Hermes, Codex, Claude, and OpenClaude setup |
+| [Examples](examples.md) | Ready-to-copy frontend prompts |
+| [Troubleshooting](troubleshooting.md) | Install, update, duplicate skill, and template issues |
+| [Update policy](update-policy.md) | `update.sh` and upstream sync PR behavior |
+| [Changelog](../CHANGELOG.md) | Release history |
+| [Contributing](../CONTRIBUTING.md) | PR rules and validation checklist |
+| [Security](../SECURITY.md) | Secret handling and security report scope |
+
 ## Best fit
 
 - frontend bug fixes

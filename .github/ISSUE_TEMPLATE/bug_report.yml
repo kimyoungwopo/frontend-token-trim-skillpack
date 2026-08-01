@@ -1,0 +1,49 @@
+name: Bug report
+description: Report install, update, docs, or skill behavior issues
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Do not paste secrets, API keys, tokens, cookies, or private repo data.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - install.sh
+        - update.sh
+        - upstream sync
+        - Hermes skill behavior
+        - Codex AGENTS.md
+        - Claude CLAUDE.md
+        - OpenClaude OPENCLAUDE.md
+        - docs
+        - benchmark
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Commands, logs, screenshots, or links. Redact secrets.
+      render: txt
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, agent, install method, relevant versions.

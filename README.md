@@ -16,6 +16,7 @@
   <img alt="Claude" src="https://img.shields.io/badge/Claude-CLAUDE.md-8b5cf6.svg">
   <img alt="OpenClaude" src="https://img.shields.io/badge/OpenClaude-OPENCLAUDE.md-f97316.svg">
   <img alt="Languages" src="https://img.shields.io/badge/docs-KO%20%7C%20EN%20%7C%20JA-f59e0b.svg">
+  <img alt="Release" src="https://img.shields.io/github/v/release/kimyoungwopo/frontend-token-trim-skillpack?include_prereleases&label=release">
 </p>
 
 <p align="center">
@@ -24,6 +25,7 @@
   <a href="#why-it-works">Why</a> ·
   <a href="#benchmark">Benchmark</a> ·
   <a href="#agent-support">Agent Support</a> ·
+  <a href="#community-and-maintenance">Community</a> ·
   <a href="docs/ko.md">한국어</a> ·
   <a href="docs/en.md">English</a> ·
   <a href="docs/ja.md">日本語</a>
@@ -258,6 +260,19 @@ Usage, benefits, support matrix, benchmark method.
 </tr>
 </table>
 
+## Community and Maintenance
+
+| Resource | Purpose |
+|---|---|
+| [Agent setup](docs/agent-setup.md) | Hermes, Codex, Claude, OpenClaude setup in one place |
+| [Examples](docs/examples.md) | Ready-to-copy frontend prompts and final report shape |
+| [Troubleshooting](docs/troubleshooting.md) | Install, update, ambiguity, and template issues |
+| [Update policy](docs/update-policy.md) | How `update.sh` and upstream sync PRs work |
+| [Changelog](CHANGELOG.md) | Release history |
+| [Contributing](CONTRIBUTING.md) | PR rules and validation checklist |
+| [Security](SECURITY.md) | Secret handling and security report scope |
+| [Code of Conduct](CODE_OF_CONDUCT.md) | Community behavior rules |
+
 ## Repository Layout
 
 ```txt
@@ -270,6 +285,10 @@ docs/
   ko.md
   en.md
   ja.md
+  agent-setup.md
+  examples.md
+  troubleshooting.md
+  update-policy.md
   benchmark.md
   benchmark-result-controlled.md
 assets/
@@ -282,12 +301,20 @@ templates/
   CLAUDE.md
   OPENCLAUDE.md
   frontend-token-trim.md
-.github/workflows/
-  validate.yml
-  sync-upstream-skills.yml
+.github/
+  ISSUE_TEMPLATE/
+  PULL_REQUEST_TEMPLATE.md
+  workflows/
+    validate.yml
+    sync-upstream-skills.yml
 install.sh
 update.sh
 README.md
+CHANGELOG.md
+CONTRIBUTING.md
+SECURITY.md
+CODE_OF_CONDUCT.md
+NOTICE.md
 LICENSE
 ```
 

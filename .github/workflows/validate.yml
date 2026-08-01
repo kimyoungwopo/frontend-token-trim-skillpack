@@ -10,17 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate shell scripts and markdown fences
+      - name: Validate shell scripts, docs, templates, and required skills
         run: |
           bash -n install.sh
           bash -n update.sh
           bash -n scripts/sync-upstream-skills.sh
           python3 - <<'PY'
           from pathlib import Path
-          files = ['README.md', 'docs/ko.md', 'docs/en.md', 'docs/ja.md', 'docs/benchmark.md', 'docs/benchmark-result-controlled.md', 'NOTICE.md']
+          fence = '`' * 3
+          files = [
+              'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'SECURITY.md',
+              'CODE_OF_CONDUCT.md', 'NOTICE.md', 'RELEASE_NOTES.md',
+              'docs/ko.md', 'docs/en.md', 'docs/ja.md',
+              'docs/agent-setup.md', 'docs/examples.md', 'docs/troubleshooting.md',
+              'docs/update-policy.md', 'docs/benchmark.md', 'docs/benchmark-result-controlled.md',
+          ]
           for path in files:
               text = Path(path).read_text()
-              assert text.count('```') % 2 == 0, f'unbalanced code fences: {path}'
+              assert text.count(fence) % 2 == 0, f'unbalanced code fences: {path}'
           required = [
               'skills/software-development/ponytail/SKILL.md',
               'skills/software-development/graphify/SKILL.md',
@@ -29,8 +36,16 @@ jobs:
               'templates/AGENTS.md',
               'templates/CLAUDE.md',
               'templates/OPENCLAUDE.md',
+              'templates/frontend-token-trim.md',
+              'assets/frontend-token-trim-flow.svg',
               'assets/frontend-token-trim-loop.svg',
+              '.github/PULL_REQUEST_TEMPLATE.md',
+              '.github/ISSUE_TEMPLATE/bug_report.yml',
+              '.github/ISSUE_TEMPLATE/feature_request.yml',
           ]
           for path in required:
               assert Path(path).exists(), f'missing: {path}'
+          assert 'Community and Maintenance' in Path('README.md').read_text()
+          assert '문서와 운영' in Path('docs/ko.md').read_text()
+          assert 'ドキュメントと運用' in Path('docs/ja.md').read_text()
           PY
