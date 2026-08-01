@@ -80,6 +80,14 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
+あとで同じ clone から更新する場合:
+
+```bash
+./update.sh
+```
+
+`update.sh` は repo を `git pull --ff-only` で更新し、その後 `install.sh` を再実行します。既存のインストール済みスキルは timestamp backup として残ります。
+
 新しい Hermes セッションで次のように依頼します。
 
 ```txt
@@ -174,6 +182,16 @@ python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript
 | [`graphify`](../skills/software-development/graphify/SKILL.md) | コード経路の絞り込み | repo-wide browsing、間違った層の修正 |
 | [`headroom`](../skills/software-development/headroom/SKILL.md) | コンテキスト/出力予算管理 | 長いログ、長文報告、QA 余白不足 |
 | [`frontend-token-trim`](../skills/software-development/frontend-token-trim/SKILL.md) | 3スキル統合 frontend loop | 焦点のぼけた frontend 作業ループ |
+
+## 更新方法
+
+| 対象 | 自動化 | 安全策 |
+|---|---|---|
+| ユーザーのインストール済み pack | git clone 内で `./update.sh` を実行 | 最新 repo pull 後、backup + reinstall |
+| upstream `ponytail` 変更 | GitHub Action が週1回確認し sync PR を作成 | prompt の挙動が変わる可能性があるため review 後に merge |
+| `graphify` / `headroom` / `frontend-token-trim` | この repo で直接更新 | 次回 `./update.sh` に含まれる |
+
+完全な無レビュー auto-merge はしません。スキル文面の変更はエージェントの動きに影響するため、PR で確認してから取り込む方式にしています。
 
 ## モデル / エージェント対応
 

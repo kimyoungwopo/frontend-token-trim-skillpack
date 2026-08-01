@@ -1,0 +1,76 @@
+name: Sync upstream skills
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Check upstream ponytail
+        id: check
+        shell: bash
+        run: |
+          set +e
+          bash scripts/sync-upstream-skills.sh --check
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          if [[ "$code" == "2" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          elif [[ "$code" == "0" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          else
+            exit "$code"
+          fi
+
+      - name: Apply upstream ponytail update
+        if: steps.check.outputs.changed == 'true'
+        run: bash scripts/sync-upstream-skills.sh --apply
+
+      - name: Validate package
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          bash -n install.sh
+          bash -n update.sh
+          bash -n scripts/sync-upstream-skills.sh
+          python3 - <<'PY'
+          from pathlib import Path
+          for path in ['README.md', 'docs/ko.md', 'docs/en.md', 'docs/ja.md', 'NOTICE.md']:
+              text = Path(path).read_text()
+              assert text.count('```') % 2 == 0, path
+          assert Path('skills/software-development/ponytail/SKILL.md').exists()
+          PY
+
+      - name: Open sync PR
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/sync-upstream-skills
+          delete-branch: true
+          title: "chore: sync upstream ponytail skill"
+          commit-message: "chore: sync upstream ponytail skill"
+          body: |
+            Automated upstream sync for `DietrichGebert/ponytail`.
+
+            Review before merging because skill prompt changes can affect agent behavior.
+
+            Checklist:
+            - [ ] Confirm `ponytail` license/attribution remains MIT-compatible.
+            - [ ] Review prompt behavior changes.
+            - [ ] Run `./install.sh` from the branch if testing locally.

@@ -1,0 +1,36 @@
+name: Validate skillpack
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell scripts and markdown fences
+        run: |
+          bash -n install.sh
+          bash -n update.sh
+          bash -n scripts/sync-upstream-skills.sh
+          python3 - <<'PY'
+          from pathlib import Path
+          files = ['README.md', 'docs/ko.md', 'docs/en.md', 'docs/ja.md', 'docs/benchmark.md', 'docs/benchmark-result-controlled.md', 'NOTICE.md']
+          for path in files:
+              text = Path(path).read_text()
+              assert text.count('```') % 2 == 0, f'unbalanced code fences: {path}'
+          required = [
+              'skills/software-development/ponytail/SKILL.md',
+              'skills/software-development/graphify/SKILL.md',
+              'skills/software-development/headroom/SKILL.md',
+              'skills/software-development/frontend-token-trim/SKILL.md',
+              'templates/AGENTS.md',
+              'templates/CLAUDE.md',
+              'templates/OPENCLAUDE.md',
+              'assets/frontend-token-trim-loop.svg',
+          ]
+          for path in required:
+              assert Path(path).exists(), f'missing: {path}'
+          PY

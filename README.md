@@ -83,6 +83,14 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
+Update later from the same clone:
+
+```bash
+./update.sh
+```
+
+`update.sh` fast-forwards the repo with `git pull --ff-only` and reruns `install.sh`, so installed skills are backed up and replaced with the latest bundled versions.
+
 Then start a new Hermes session and ask:
 
 ```txt
@@ -204,6 +212,18 @@ Best results require file search, targeted reads, edits, lint/type/build/test ex
 | [`headroom`](skills/software-development/headroom/SKILL.md) | Context/output budgeting | Long logs, giant summaries, no room for QA |
 | [`frontend-token-trim`](skills/software-development/frontend-token-trim/SKILL.md) | Combined frontend workflow | Unfocused frontend agent loops |
 
+## Updates
+
+There are two update paths:
+
+| Target | Automation | Safety rule |
+|---|---|---|
+| Users installing this pack | Run `./update.sh` in a git clone | Pulls latest repo, then reinstalls with backups |
+| Upstream `ponytail` changes | Weekly GitHub Action opens a sync PR | Human review before merge |
+| Project-authored `graphify` / `headroom` / `frontend-token-trim` | Updated in this repo | Included on next `git pull && ./install.sh` or `./update.sh` |
+
+Why PR instead of silent auto-merge? Skill prompts change agent behavior, so upstream updates should be visible before they become the public package default.
+
 ## Documentation
 
 <table>
@@ -256,12 +276,17 @@ assets/
   frontend-token-trim-flow.svg
 scripts/
   estimate_tokens.py
+  sync-upstream-skills.sh
 templates/
   AGENTS.md
   CLAUDE.md
   OPENCLAUDE.md
   frontend-token-trim.md
+.github/workflows/
+  validate.yml
+  sync-upstream-skills.yml
 install.sh
+update.sh
 README.md
 LICENSE
 ```

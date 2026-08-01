@@ -80,6 +80,14 @@ cd frontend-token-trim-skillpack
 ./install.sh
 ```
 
+이후 같은 clone에서 업데이트하려면:
+
+```bash
+./update.sh
+```
+
+`update.sh`는 repo를 `git pull --ff-only`로 최신화한 뒤 `install.sh`를 다시 실행합니다. 기존 설치본은 timestamp backup으로 남습니다.
+
 새 Hermes 세션에서 이렇게 사용합니다.
 
 ```txt
@@ -174,6 +182,16 @@ python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript
 | [`graphify`](../skills/software-development/graphify/SKILL.md) | 코드 경로 좁히기 | repo-wide browsing, 잘못된 레이어 수정 |
 | [`headroom`](../skills/software-development/headroom/SKILL.md) | 컨텍스트/출력 예산 관리 | 긴 로그, 장문 보고, QA 여유 부족 |
 | [`frontend-token-trim`](../skills/software-development/frontend-token-trim/SKILL.md) | 세 스킬 통합 프론트엔드 루프 | 산만한 프론트엔드 작업 루프 |
+
+## 업데이트 방식
+
+| 대상 | 자동화 | 안전장치 |
+|---|---|---|
+| 사용자 설치본 | git clone 안에서 `./update.sh` 실행 | 최신 repo pull 후 backup + reinstall |
+| upstream `ponytail` 변경 | GitHub Action이 주 1회 확인 후 sync PR 생성 | prompt 동작 변경 가능성이 있어 사람 review 후 merge |
+| `graphify` / `headroom` / `frontend-token-trim` | 이 repo에서 직접 업데이트 | 다음 `./update.sh`에 포함 |
+
+완전 무검토 자동 merge는 하지 않습니다. 스킬 문구 변경은 에이전트 행동을 바꿀 수 있어서 PR로 확인하는 쪽이 안전합니다.
 
 ## 모델/에이전트 지원
 

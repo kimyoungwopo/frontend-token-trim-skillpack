@@ -107,6 +107,16 @@ Risk: <none or remaining limitation>
 
 Combines the three skills into one frontend workflow.
 
+## Updates
+
+| Target | Automation | Safety rule |
+|---|---|---|
+| User-installed pack | Run `./update.sh` inside the git clone | Pull latest repo, then backup + reinstall |
+| Upstream `ponytail` changes | Weekly GitHub Action opens a sync PR | Review prompt behavior before merge |
+| `graphify` / `headroom` / `frontend-token-trim` | Updated directly in this repo | Included on the next `./update.sh` |
+
+This repo does not silently auto-merge upstream prompt changes. Skill text changes can change agent behavior, so the automation creates a reviewable PR.
+
 ## Best fit
 
 - frontend bug fixes
@@ -140,6 +150,14 @@ git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
 cd frontend-token-trim-skillpack
 ./install.sh
 ```
+
+Update later from the same clone:
+
+```bash
+./update.sh
+```
+
+`update.sh` fast-forwards the repo with `git pull --ff-only`, then reruns `install.sh`. Existing installed skills are kept as timestamped backups.
 
 Start a new Hermes session after installing.
 
