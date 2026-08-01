@@ -89,7 +89,7 @@ Update later from the same clone:
 ./update.sh
 ```
 
-`update.sh` fast-forwards the repo with `git pull --ff-only` and reruns `install.sh`, so installed skills are backed up and replaced with the latest bundled versions.
+`update.sh` fast-forwards the repo with `git pull --ff-only` and reruns `install.sh`, so installed skills are backed up outside the active skills directory and replaced with the latest bundled versions.
 
 Then start a new Hermes session and ask:
 
@@ -218,7 +218,7 @@ There are two update paths:
 
 | Target | Automation | Safety rule |
 |---|---|---|
-| Users installing this pack | Run `./update.sh` in a git clone | Pulls latest repo, then reinstalls with backups |
+| Users installing this pack | Run `./update.sh` in a git clone | Pulls latest repo, then reinstalls with backups outside active skills |
 | Upstream `ponytail` changes | Weekly GitHub Action opens a sync PR | Human review before merge |
 | Project-authored `graphify` / `headroom` / `frontend-token-trim` | Updated in this repo | Included on next `git pull && ./install.sh` or `./update.sh` |
 
@@ -293,7 +293,7 @@ LICENSE
 
 ## Notes
 
-- Existing same-name Hermes skills are backed up by `install.sh` as `<skill>.backup-YYYYMMDD-HHMMSS`.
+- Existing same-name Hermes skills are backed up by `install.sh` under `~/.hermes/skill-backups/frontend-token-trim/`, outside the active skills directory so backup copies do not create duplicate skill names.
 - `ponytail` is MIT-adapted from DietrichGebert/ponytail; see [`SKILL.md`](skills/software-development/ponytail/SKILL.md) and [`NOTICE.md`](NOTICE.md).
 - This pack does not change your model, pricing, or context window. It changes **how the agent spends context**.
 

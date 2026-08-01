@@ -86,7 +86,7 @@ cd frontend-token-trim-skillpack
 ./update.sh
 ```
 
-`update.sh` は repo を `git pull --ff-only` で更新し、その後 `install.sh` を再実行します。既存のインストール済みスキルは timestamp backup として残ります。
+`update.sh` は repo を `git pull --ff-only` で更新し、その後 `install.sh` を再実行します。既存のインストール済みスキルは active skills ディレクトリ外の `~/.hermes/skill-backups/frontend-token-trim/` に timestamp backup として残ります。
 
 新しい Hermes セッションで次のように依頼します。
 
@@ -187,7 +187,7 @@ python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript
 
 | 対象 | 自動化 | 安全策 |
 |---|---|---|
-| ユーザーのインストール済み pack | git clone 内で `./update.sh` を実行 | 最新 repo pull 後、backup + reinstall |
+| ユーザーのインストール済み pack | git clone 内で `./update.sh` を実行 | 最新 repo pull 後、active skills 外に backup + reinstall |
 | upstream `ponytail` 変更 | GitHub Action が週1回確認し sync PR を作成 | prompt の挙動が変わる可能性があるため review 後に merge |
 | `graphify` / `headroom` / `frontend-token-trim` | この repo で直接更新 | 次回 `./update.sh` に含まれる |
 

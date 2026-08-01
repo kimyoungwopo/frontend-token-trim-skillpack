@@ -111,7 +111,7 @@ Combines the three skills into one frontend workflow.
 
 | Target | Automation | Safety rule |
 |---|---|---|
-| User-installed pack | Run `./update.sh` inside the git clone | Pull latest repo, then backup + reinstall |
+| User-installed pack | Run `./update.sh` inside the git clone | Pull latest repo, then backup outside active skills + reinstall |
 | Upstream `ponytail` changes | Weekly GitHub Action opens a sync PR | Review prompt behavior before merge |
 | `graphify` / `headroom` / `frontend-token-trim` | Updated directly in this repo | Included on the next `./update.sh` |
 
@@ -157,7 +157,7 @@ Update later from the same clone:
 ./update.sh
 ```
 
-`update.sh` fast-forwards the repo with `git pull --ff-only`, then reruns `install.sh`. Existing installed skills are kept as timestamped backups.
+`update.sh` fast-forwards the repo with `git pull --ff-only`, then reruns `install.sh`. Existing installed skills are kept as timestamped backups under `~/.hermes/skill-backups/frontend-token-trim/`, outside the active skills directory.
 
 Start a new Hermes session after installing.
 

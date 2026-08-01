@@ -86,7 +86,7 @@ cd frontend-token-trim-skillpack
 ./update.sh
 ```
 
-`update.sh`는 repo를 `git pull --ff-only`로 최신화한 뒤 `install.sh`를 다시 실행합니다. 기존 설치본은 timestamp backup으로 남습니다.
+`update.sh`는 repo를 `git pull --ff-only`로 최신화한 뒤 `install.sh`를 다시 실행합니다. 기존 설치본은 active skills 디렉터리 밖의 `~/.hermes/skill-backups/frontend-token-trim/`에 timestamp backup으로 남습니다.
 
 새 Hermes 세션에서 이렇게 사용합니다.
 
@@ -187,7 +187,7 @@ python3 scripts/estimate_tokens.py baseline-transcript.txt token-trim-transcript
 
 | 대상 | 자동화 | 안전장치 |
 |---|---|---|
-| 사용자 설치본 | git clone 안에서 `./update.sh` 실행 | 최신 repo pull 후 backup + reinstall |
+| 사용자 설치본 | git clone 안에서 `./update.sh` 실행 | 최신 repo pull 후 active skills 밖에 backup + reinstall |
 | upstream `ponytail` 변경 | GitHub Action이 주 1회 확인 후 sync PR 생성 | prompt 동작 변경 가능성이 있어 사람 review 후 merge |
 | `graphify` / `headroom` / `frontend-token-trim` | 이 repo에서 직접 업데이트 | 다음 `./update.sh`에 포함 |
 
