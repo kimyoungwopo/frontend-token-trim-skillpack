@@ -14,6 +14,7 @@
   <a href="en.md">English</a> ·
   <a href="ja.md">日本語</a> ·
   <a href="#어떻게-돌아가나요">동작 플로우</a> ·
+  <a href="#v020-도입-도구">v0.2.0 도입 도구</a> ·
   <a href="benchmark.md">Benchmark</a> ·
   <a href="benchmark-result-controlled.md">Result</a> ·
   <a href="troubleshooting.md">Troubleshooting</a>
@@ -28,6 +29,27 @@
 </p>
 
 ---
+
+## 30초 요약
+
+> **덜 읽고, 덜 고치고, 검증은 더 정확하게.**
+
+프론트엔드 AI 에이전트는 코드를 많이 써서가 아니라, 관련 없는 파일을 너무 많이 읽고 작은 UI 수정까지 큰 리팩터링으로 키우면서 토큰을 낭비하는 경우가 많습니다.
+
+Frontend Token Trim은 작업 순서를 이렇게 고정합니다.
+
+```txt
+Graphify로 경로 좁히기 → Ponytail로 최소 diff → Headroom으로 QA 여유 확보
+```
+
+```bash
+git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
+cd frontend-token-trim-skillpack
+./install.sh
+scripts/doctor.sh
+```
+
+통제 예제 기준: **2,489 → 496 추정 토큰**으로 줄이면서 lint와 320/390px 브라우저 QA를 유지했습니다.
 
 ## 한 줄 요약
 
@@ -79,6 +101,7 @@ evidence > long summary
 git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
 cd frontend-token-trim-skillpack
 ./install.sh
+scripts/doctor.sh
 ```
 
 이후 같은 clone에서 업데이트하려면:
@@ -100,6 +123,12 @@ frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
 프로젝트 루트에 맞는 rule 파일을 복사합니다.
 
 ```bash
+# helper 사용
+scripts/install-agent-rules.sh codex /path/to/your-project
+scripts/install-agent-rules.sh claude /path/to/your-project
+scripts/install-agent-rules.sh openclaude /path/to/your-project
+
+# 직접 복사
 # Codex / OpenAI coding agents
 cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
@@ -216,6 +245,49 @@ Apply Frontend Token Trim:
 4) Touch the fewest files that fix the real flow.
 5) Verify exact affected route plus 320/390 mobile overflow; include command/screenshot evidence.
 6) Final report: changed files, verification result, remaining risk only.
+```
+
+## v0.2.0 도입 도구
+
+v0.2.0은 문서 추가보다 **실제 도입성**을 강화한 업데이트입니다.
+
+| 도구 | 용도 |
+|---|---|
+| [`scripts/doctor.sh`](../scripts/doctor.sh) | 설치 상태, 누락 스킬, 중복 backup 충돌, template, manifest 점검 |
+| [`scripts/install-agent-rules.sh`](../scripts/install-agent-rules.sh) | Codex, Claude, OpenClaude, generic rule 파일을 프로젝트에 안전하게 설치 |
+| [`skillpack.json`](../skillpack.json) | 스킬, license, template, script를 담은 패키지 manifest |
+| [`docs/modes.md`](modes.md) | light / strict / review 모드 contract |
+| [`docs/frontend-qa-checklist.md`](frontend-qa-checklist.md) | 320/390px, 접근성, token 재사용, 최종 증거 체크리스트 |
+| [`examples/mobile-overflow`](../examples/mobile-overflow/README.md) | 모바일 overflow before/after 예제 |
+| [`ROADMAP.md`](../ROADMAP.md) | preset, benchmark suite, analyzer, v1.0까지의 계획 |
+| [`assets/social`](../assets/social/) | dev.to, GitHub, Threads 홍보 이미지 |
+
+### 설치 상태 점검
+
+```bash
+scripts/doctor.sh
+```
+
+### agent rule 설치
+
+```bash
+scripts/install-agent-rules.sh codex /path/to/project
+scripts/install-agent-rules.sh claude /path/to/project
+scripts/install-agent-rules.sh openclaude /path/to/project
+```
+
+기존 rule 파일이 있으면 기본적으로 덮어쓰지 않습니다. 필요하면 `--append` 또는 `--force`를 사용합니다.
+
+### 업데이트 확인
+
+```bash
+./update.sh --check
+```
+
+### 설치 dry-run
+
+```bash
+./install.sh --dry-run
 ```
 
 ## 문서와 운영

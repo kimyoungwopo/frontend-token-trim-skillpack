@@ -14,6 +14,7 @@
   <a href="ko.md">한국어</a> ·
   <a href="en.md">English</a> ·
   <a href="#どう動きますか">動作フロー</a> ·
+  <a href="#v020-導入ツール">v0.2.0 導入ツール</a> ·
   <a href="benchmark.md">Benchmark</a> ·
   <a href="benchmark-result-controlled.md">Result</a> ·
   <a href="troubleshooting.md">Troubleshooting</a>
@@ -28,6 +29,27 @@
 </p>
 
 ---
+
+## 30秒版
+
+> **読む量を減らし、変更量を減らし、検証をより正確に。**
+
+フロントエンド AI エージェントは、コードを書きすぎるというより、関係ないファイルを読みすぎたり、小さな UI 修正を大きなリファクタに広げたりしてトークンを消費しがちです。
+
+Frontend Token Trim は作業順序を次のように固定します。
+
+```txt
+Graphify で経路を絞る → Ponytail で最小 diff → Headroom で QA 余白を残す
+```
+
+```bash
+git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
+cd frontend-token-trim-skillpack
+./install.sh
+scripts/doctor.sh
+```
+
+制御例では、lint と 320/390px browser QA を維持したまま **2,489 → 496 推定トークン** まで削減しました。
 
 ## 一言でいうと
 
@@ -79,6 +101,7 @@ evidence > long summary
 git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
 cd frontend-token-trim-skillpack
 ./install.sh
+scripts/doctor.sh
 ```
 
 あとで同じ clone から更新する場合:
@@ -100,6 +123,12 @@ frontend-token-trim を適用して、このフロントエンド issue を修�
 プロジェクトルートに対応する rule file をコピーします。
 
 ```bash
+# helper
+scripts/install-agent-rules.sh codex /path/to/your-project
+scripts/install-agent-rules.sh claude /path/to/your-project
+scripts/install-agent-rules.sh openclaude /path/to/your-project
+
+# manual copy
 # Codex / OpenAI coding agents
 cp templates/AGENTS.md /path/to/your-project/AGENTS.md
 
@@ -216,6 +245,49 @@ Apply Frontend Token Trim:
 4) Touch the fewest files that fix the real flow.
 5) Verify exact affected route plus 320/390 mobile overflow; include command/screenshot evidence.
 6) Final report: changed files, verification result, remaining risk only.
+```
+
+## v0.2.0 導入ツール
+
+v0.2.0 は、単なるドキュメント追加ではなく **実際に導入しやすくするための更新** です。
+
+| ツール | 用途 |
+|---|---|
+| [`scripts/doctor.sh`](../scripts/doctor.sh) | install 状態、missing skill、backup 重複、template、manifest を確認 |
+| [`scripts/install-agent-rules.sh`](../scripts/install-agent-rules.sh) | Codex、Claude、OpenClaude、generic rule file を安全に project へ install |
+| [`skillpack.json`](../skillpack.json) | skills、license、template、script をまとめた package manifest |
+| [`docs/modes.md`](modes.md) | light / strict / review mode contract |
+| [`docs/frontend-qa-checklist.md`](frontend-qa-checklist.md) | 320/390px、accessibility、token reuse、final evidence checklist |
+| [`examples/mobile-overflow`](../examples/mobile-overflow/README.md) | mobile overflow before/after example |
+| [`ROADMAP.md`](../ROADMAP.md) | presets、benchmark suite、analyzer、v1.0 までの計画 |
+| [`assets/social`](../assets/social/) | dev.to、GitHub、Threads promotion images |
+
+### install health check
+
+```bash
+scripts/doctor.sh
+```
+
+### agent rule install
+
+```bash
+scripts/install-agent-rules.sh codex /path/to/project
+scripts/install-agent-rules.sh claude /path/to/project
+scripts/install-agent-rules.sh openclaude /path/to/project
+```
+
+既存 rule file がある場合、デフォルトでは上書きしません。必要な場合は `--append` または `--force` を使います。
+
+### update check
+
+```bash
+./update.sh --check
+```
+
+### install dry-run
+
+```bash
+./install.sh --dry-run
 ```
 
 ## ドキュメントと運用
