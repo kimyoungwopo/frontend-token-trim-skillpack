@@ -224,8 +224,12 @@ Apply Frontend Token Trim:
 |---|---|
 | [Agent setup](agent-setup.md) | Hermes, Codex, Claude, OpenClaude 적용법 |
 | [Examples](examples.md) | 바로 복사해서 쓸 수 있는 프론트엔드 요청 예시 |
+| [Modes](modes.md) | light / strict / review 모드 사용법 |
+| [Frontend QA checklist](frontend-qa-checklist.md) | 320/390px, 접근성, 검증 증거 체크리스트 |
 | [Troubleshooting](troubleshooting.md) | 설치, 업데이트, 중복 스킬, 템플릿 문제 해결 |
 | [Update policy](update-policy.md) | `update.sh`와 upstream sync PR 방식 설명 |
+| [Promotion kit](promotion.md) | Threads/dev.to 홍보 문구와 social asset |
+| [Roadmap](../ROADMAP.md) | 다음 업데이트 계획 |
 | [Changelog](../CHANGELOG.md) | 릴리스 히스토리 |
 | [Contributing](../CONTRIBUTING.md) | PR 규칙과 검증 체크리스트 |
 | [Security](../SECURITY.md) | secret/credential 처리와 보안 제보 범위 |

@@ -1,0 +1,25 @@
+.dashboard-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--surface-card);
+}
+
+.dashboard-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dashboard-card__button {
+  white-space: nowrap;
+}
+
+@media (max-width: 390px) {
+  .dashboard-card__actions {
+    justify-content: flex-start;
+  }
+}

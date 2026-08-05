@@ -25,6 +25,7 @@
   <a href="#why-it-works">Why</a> ·
   <a href="#benchmark">Benchmark</a> ·
   <a href="#agent-support">Agent Support</a> ·
+  <a href="#adoption-tools">Adoption Tools</a> ·
   <a href="#community-and-maintenance">Community</a> ·
   <a href="docs/ko.md">한국어</a> ·
   <a href="docs/en.md">English</a> ·
@@ -32,6 +33,25 @@
 </p>
 
 ---
+
+## 30-second version
+
+> **Read less. Change less. Verify more.**
+
+AI coding agents often waste frontend tokens by reading unrelated files and drifting into broad refactors. Frontend Token Trim gives them a stricter workflow:
+
+```txt
+Graphify the path → Ponytail the diff → keep Headroom for QA
+```
+
+```bash
+git clone https://github.com/kimyoungwopo/frontend-token-trim-skillpack.git
+cd frontend-token-trim-skillpack
+./install.sh
+scripts/doctor.sh
+```
+
+Controlled example: **2,489 → 496 estimated tokens** while keeping lint and 320/390px browser QA.
 
 ## What is this?
 
@@ -93,6 +113,12 @@ Update later from the same clone:
 
 `update.sh` fast-forwards the repo with `git pull --ff-only` and reruns `install.sh`, so installed skills are backed up outside the active skills directory and replaced with the latest bundled versions.
 
+Check install health:
+
+```bash
+scripts/doctor.sh
+```
+
 Then start a new Hermes session and ask:
 
 ```txt
@@ -101,7 +127,15 @@ frontend-token-trim 적용해서 이 프론트엔드 이슈 고쳐줘.
 
 ### Codex / Claude / OpenClaude
 
-Copy the matching rule file into your project root:
+Copy the matching rule file into your project root, or use the helper:
+
+```bash
+scripts/install-agent-rules.sh codex /path/to/your-project
+scripts/install-agent-rules.sh claude /path/to/your-project
+scripts/install-agent-rules.sh openclaude /path/to/your-project
+```
+
+Manual copy:
 
 ```bash
 # Codex / OpenAI coding agents
@@ -260,6 +294,19 @@ Usage, benefits, support matrix, benchmark method.
 </tr>
 </table>
 
+## Adoption Tools
+
+| Resource | Purpose |
+|---|---|
+| [`scripts/doctor.sh`](scripts/doctor.sh) | Check install health, missing skills, duplicate backup conflicts, templates, and manifest |
+| [`scripts/install-agent-rules.sh`](scripts/install-agent-rules.sh) | Install Codex, Claude, OpenClaude, or generic rules into a target project |
+| [`skillpack.json`](skillpack.json) | Machine-readable package manifest for skills, templates, and scripts |
+| [Modes](docs/modes.md) | Light, strict, and review mode contracts |
+| [Frontend QA checklist](docs/frontend-qa-checklist.md) | 320/390px, accessibility, token reuse, and final evidence checklist |
+| [Mobile overflow example](examples/mobile-overflow/README.md) | Concrete before/after example for a common frontend task |
+| [Roadmap](ROADMAP.md) | Planned path toward presets, benchmark suite, analyzer, and v1.0 |
+| [Promotion kit](docs/promotion.md) | Social/dev.to copy and cover assets |
+
 ## Community and Maintenance
 
 | Resource | Purpose |
@@ -287,13 +334,20 @@ docs/
   ja.md
   agent-setup.md
   examples.md
+  modes.md
+  frontend-qa-checklist.md
   troubleshooting.md
   update-policy.md
+  promotion.md
   benchmark.md
   benchmark-result-controlled.md
 assets/
   frontend-token-trim-flow.svg
+  frontend-token-trim-loop.svg
+  social/
 scripts/
+  doctor.sh
+  install-agent-rules.sh
   estimate_tokens.py
   sync-upstream-skills.sh
 templates/
@@ -307,9 +361,13 @@ templates/
   workflows/
     validate.yml
     sync-upstream-skills.yml
+examples/
+  mobile-overflow/
 install.sh
 update.sh
+skillpack.json
 README.md
+ROADMAP.md
 CHANGELOG.md
 CONTRIBUTING.md
 SECURITY.md

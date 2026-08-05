@@ -1,0 +1,50 @@
+{
+  "name": "frontend-token-trim-skillpack",
+  "version": "0.2.0",
+  "description": "Token-efficient frontend AI coding agent workflow: Graphify the path, Ponytail the diff, keep Headroom for QA.",
+  "license": "MIT",
+  "repository": "https://github.com/kimyoungwopo/frontend-token-trim-skillpack",
+  "category": "software-development",
+  "skills": [
+    {
+      "name": "ponytail",
+      "path": "skills/software-development/ponytail",
+      "license": "MIT",
+      "source": "https://github.com/DietrichGebert/ponytail",
+      "upstreamTracking": ".upstream/ponytail.head"
+    },
+    {
+      "name": "graphify",
+      "path": "skills/software-development/graphify",
+      "license": "MIT",
+      "source": "project-authored"
+    },
+    {
+      "name": "headroom",
+      "path": "skills/software-development/headroom",
+      "license": "MIT",
+      "source": "project-authored"
+    },
+    {
+      "name": "frontend-token-trim",
+      "path": "skills/software-development/frontend-token-trim",
+      "license": "MIT",
+      "source": "project-authored",
+      "umbrella": true
+    }
+  ],
+  "templates": [
+    "templates/AGENTS.md",
+    "templates/CLAUDE.md",
+    "templates/OPENCLAUDE.md",
+    "templates/frontend-token-trim.md"
+  ],
+  "scripts": [
+    "install.sh",
+    "update.sh",
+    "scripts/doctor.sh",
+    "scripts/install-agent-rules.sh",
+    "scripts/estimate_tokens.py",
+    "scripts/sync-upstream-skills.sh"
+  ]
+}

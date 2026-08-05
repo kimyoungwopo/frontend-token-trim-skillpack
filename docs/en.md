@@ -123,8 +123,12 @@ This repo does not silently auto-merge upstream prompt changes. Skill text chang
 |---|---|
 | [Agent setup](agent-setup.md) | Hermes, Codex, Claude, and OpenClaude setup |
 | [Examples](examples.md) | Ready-to-copy frontend prompts |
+| [Modes](modes.md) | Light, strict, and review mode contracts |
+| [Frontend QA checklist](frontend-qa-checklist.md) | 320/390px, accessibility, and evidence checklist |
 | [Troubleshooting](troubleshooting.md) | Install, update, duplicate skill, and template issues |
 | [Update policy](update-policy.md) | `update.sh` and upstream sync PR behavior |
+| [Promotion kit](promotion.md) | Threads/dev.to copy and social assets |
+| [Roadmap](../ROADMAP.md) | Next update plan |
 | [Changelog](../CHANGELOG.md) | Release history |
 | [Contributing](../CONTRIBUTING.md) | PR rules and validation checklist |
 | [Security](../SECURITY.md) | Secret handling and security report scope |

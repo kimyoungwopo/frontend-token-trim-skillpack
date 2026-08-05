@@ -10,25 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate shell scripts, docs, templates, and required skills
+      - name: Validate shell scripts, docs, templates, manifest, examples, and required skills
         run: |
           bash -n install.sh
           bash -n update.sh
+          bash -n scripts/doctor.sh
+          bash -n scripts/install-agent-rules.sh
           bash -n scripts/sync-upstream-skills.sh
+          ./install.sh --dry-run
           python3 - <<'PY'
           from pathlib import Path
+          import json
           fence = '`' * 3
           files = [
               'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'SECURITY.md',
-              'CODE_OF_CONDUCT.md', 'NOTICE.md', 'RELEASE_NOTES.md',
-              'docs/ko.md', 'docs/en.md', 'docs/ja.md',
-              'docs/agent-setup.md', 'docs/examples.md', 'docs/troubleshooting.md',
-              'docs/update-policy.md', 'docs/benchmark.md', 'docs/benchmark-result-controlled.md',
+              'CODE_OF_CONDUCT.md', 'NOTICE.md', 'RELEASE_NOTES.md', 'RELEASE_NOTES_V0.2.0.md',
+              'ROADMAP.md', 'docs/ko.md', 'docs/en.md', 'docs/ja.md',
+              'docs/agent-setup.md', 'docs/examples.md', 'docs/modes.md',
+              'docs/frontend-qa-checklist.md', 'docs/troubleshooting.md',
+              'docs/update-policy.md', 'docs/promotion.md', 'docs/benchmark.md',
+              'docs/benchmark-result-controlled.md', 'examples/mobile-overflow/README.md',
+              'examples/mobile-overflow/baseline-prompt.md',
+              'examples/mobile-overflow/token-trim-prompt.md',
           ]
           for path in files:
               text = Path(path).read_text()
               assert text.count(fence) % 2 == 0, f'unbalanced code fences: {path}'
           required = [
+              'skillpack.json',
               'skills/software-development/ponytail/SKILL.md',
               'skills/software-development/graphify/SKILL.md',
               'skills/software-development/headroom/SKILL.md',
@@ -39,13 +48,22 @@ jobs:
               'templates/frontend-token-trim.md',
               'assets/frontend-token-trim-flow.svg',
               'assets/frontend-token-trim-loop.svg',
+              'assets/social/devto-cover.png',
+              'assets/social/github-social-preview.png',
+              'assets/social/threads-card.png',
+              'examples/mobile-overflow/before/dashboard-card.css',
+              'examples/mobile-overflow/after/dashboard-card.css',
               '.github/PULL_REQUEST_TEMPLATE.md',
               '.github/ISSUE_TEMPLATE/bug_report.yml',
               '.github/ISSUE_TEMPLATE/feature_request.yml',
           ]
           for path in required:
               assert Path(path).exists(), f'missing: {path}'
-          assert 'Community and Maintenance' in Path('README.md').read_text()
+          manifest = json.loads(Path('skillpack.json').read_text())
+          assert manifest['version'] == '0.2.0'
+          assert len(manifest['skills']) == 4
+          assert '30-second version' in Path('README.md').read_text()
+          assert 'Adoption Tools' in Path('README.md').read_text()
           assert '문서와 운영' in Path('docs/ko.md').read_text()
           assert 'ドキュメントと運用' in Path('docs/ja.md').read_text()
           PY

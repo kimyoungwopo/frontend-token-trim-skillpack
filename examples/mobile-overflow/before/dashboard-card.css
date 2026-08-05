@@ -1,0 +1,18 @@
+.dashboard-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--surface-card);
+}
+
+.dashboard-card__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-width: 360px;
+}
+
+.dashboard-card__button {
+  white-space: nowrap;
+}

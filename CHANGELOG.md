@@ -8,6 +8,28 @@ This project follows a lightweight semantic versioning style:
 - `MINOR`: new skills, templates, automation, or docs
 - `PATCH`: fixes, copy edits, validation improvements
 
+## v0.2.0 - 2026-08-02
+
+Adoption tooling release.
+
+### Added
+
+- `scripts/doctor.sh` install health checker.
+- `scripts/install-agent-rules.sh` for Codex, Claude, OpenClaude, and generic rule setup.
+- `skillpack.json` package manifest.
+- `ROADMAP.md`.
+- `docs/modes.md` with light, strict, and review modes.
+- `docs/frontend-qa-checklist.md`.
+- `docs/promotion.md` and social preview assets.
+- `examples/mobile-overflow/` before/after example.
+
+### Changed
+
+- `install.sh` supports `--dry-run`.
+- `update.sh` supports `--check`.
+- README top section now surfaces problem, install, doctor, and benchmark faster.
+- Validation workflow covers v0.2.0 docs, scripts, manifest, examples, and social assets.
+
 ## v0.1.0 - 2026-08-01
 
 Initial public release.
