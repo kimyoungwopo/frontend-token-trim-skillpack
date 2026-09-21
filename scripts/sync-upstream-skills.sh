@@ -43,31 +43,50 @@ fi
 # native skill path, then fall back to the agent-rule path used by older
 # releases. Refuse ambiguous or unsupported layouts instead of syncing a
 # README or unrelated prompt by accident.
-upstream_skill=""
-for candidate in \
-  "$tmp/ponytail/skills/ponytail/SKILL.md" \
-  "$tmp/ponytail/.openclaw/skills/ponytail/SKILL.md" \
-  "$tmp/ponytail/.agents/rules/ponytail.md"; do
+candidates=(
+  "$tmp/ponytail/skills/ponytail/SKILL.md"
+  "$tmp/ponytail/.openclaw/skills/ponytail/SKILL.md"
+  "$tmp/ponytail/.agents/rules/ponytail.md"
+)
+matching=()
+for candidate in "${candidates[@]}"; do
+  if [[ -L "$candidate" ]]; then
+    echo "Supported upstream skill path is a symlink; refusing automatic content sync: $candidate" >&2
+    exit 1
+  fi
   if [[ -f "$candidate" ]]; then
-    upstream_skill="$candidate"
-    break
+    matching+=("$candidate")
   fi
 done
 
-if [[ -z "$upstream_skill" ]]; then
+if (( ${#matching[@]} == 0 )); then
   echo "Upstream clone has no supported ponytail skill path; refusing automatic content sync." >&2
   echo "Checked: skills/ponytail/SKILL.md, .openclaw/skills/ponytail/SKILL.md, .agents/rules/ponytail.md" >&2
   exit 1
 fi
+if (( ${#matching[@]} > 1 )); then
+  printf 'Multiple supported upstream ponytail skill paths found; refusing automatic content sync:\n' >&2
+  printf '  %s\n' "${matching[@]}" >&2
+  exit 1
+fi
+upstream_skill="${matching[0]}"
+upstream_skill_dir="$(dirname "$upstream_skill")"
 
 backup="$tmp/current-ponytail"
 cp -R "$PONYTAIL_DEST" "$backup"
 mkdir -p "$PONYTAIL_DEST"
 cp -R "$upstream_skill" "$PONYTAIL_DEST/SKILL.md"
 for dir in references templates scripts assets; do
-  if [[ -d "$tmp/ponytail/$dir" ]]; then
+  source_dir=""
+  for candidate_dir in "$upstream_skill_dir/$dir" "$tmp/ponytail/$dir"; do
+    if [[ -d "$candidate_dir" && ! -L "$candidate_dir" ]]; then
+      source_dir="$candidate_dir"
+      break
+    fi
+  done
+  if [[ -n "$source_dir" ]]; then
     mkdir -p "$PONYTAIL_DEST/$dir"
-    cp -R "$tmp/ponytail/$dir/." "$PONYTAIL_DEST/$dir/"
+    cp -R "$source_dir/." "$PONYTAIL_DEST/$dir/"
   fi
 done
 

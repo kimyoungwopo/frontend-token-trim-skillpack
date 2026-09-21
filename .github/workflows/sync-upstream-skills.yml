@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Configure git
         run: |
@@ -39,19 +39,11 @@ jobs:
             exit "$code"
           fi
 
-      - name: Check PR automation permission
+      - name: Explain PR fallback
         if: steps.check.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
         run: |
-          workflow_permissions="$(gh api "repos/$GH_REPO/actions/permissions/workflow")"
-          can_approve="$(printf '%s' "$workflow_permissions" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("can_approve_pull_request_reviews", False))')"
-          if [[ "$can_approve" != "True" ]]; then
-            echo "GitHub Actions cannot create/approve pull requests for this repository." >&2
-            echo "Enable Settings > Actions > General > Workflow permissions > Allow GitHub Actions to create and approve pull requests, then rerun." >&2
-            exit 1
-          fi
+          echo "Upstream changed; PR creation requires repository Actions PR permission or a configured PR token."
+          echo "If the create-pull-request step cannot open a PR, the generated branch remains available for manual review."
 
       - name: Apply upstream ponytail update
         if: steps.check.outputs.changed == 'true'
@@ -73,7 +65,9 @@ jobs:
 
       - name: Open sync PR
         if: steps.check.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        id: open_pr
+        continue-on-error: true
+        uses: peter-evans/create-pull-request@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           branch: chore/sync-upstream-skills
           delete-branch: true
