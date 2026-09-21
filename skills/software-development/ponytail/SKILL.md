@@ -1,7 +1,7 @@
 ---
 name: ponytail
 description: "Use when writing or changing code where the user wants the simplest correct implementation: YAGNI, reuse existing code, standard library/native features first, no unrequested abstractions, shortest working diff after understanding the real flow."
-version: upstream-2ed6c52
+version: upstream-e3ba2aa
 author: Dietrich Gebert / Frontend Token Trim Skillpack adaptation
 license: MIT
 metadata:
