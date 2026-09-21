@@ -39,19 +39,35 @@ if [[ "$MODE" != "--apply" ]]; then
   exit 64
 fi
 
-if [[ ! -f "$tmp/ponytail/SKILL.md" ]]; then
-  echo "Upstream clone does not contain SKILL.md; refusing automatic content sync." >&2
+# Ponytail has moved its canonical skill file between releases. Prefer the
+# native skill path, then fall back to the agent-rule path used by older
+# releases. Refuse ambiguous or unsupported layouts instead of syncing a
+# README or unrelated prompt by accident.
+upstream_skill=""
+for candidate in \
+  "$tmp/ponytail/skills/ponytail/SKILL.md" \
+  "$tmp/ponytail/.openclaw/skills/ponytail/SKILL.md" \
+  "$tmp/ponytail/.agents/rules/ponytail.md"; do
+  if [[ -f "$candidate" ]]; then
+    upstream_skill="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$upstream_skill" ]]; then
+  echo "Upstream clone has no supported ponytail skill path; refusing automatic content sync." >&2
+  echo "Checked: skills/ponytail/SKILL.md, .openclaw/skills/ponytail/SKILL.md, .agents/rules/ponytail.md" >&2
   exit 1
 fi
 
 backup="$tmp/current-ponytail"
 cp -R "$PONYTAIL_DEST" "$backup"
-rm -rf "$PONYTAIL_DEST"
 mkdir -p "$PONYTAIL_DEST"
-cp -R "$tmp/ponytail/SKILL.md" "$PONYTAIL_DEST/SKILL.md"
+cp -R "$upstream_skill" "$PONYTAIL_DEST/SKILL.md"
 for dir in references templates scripts assets; do
   if [[ -d "$tmp/ponytail/$dir" ]]; then
-    cp -R "$tmp/ponytail/$dir" "$PONYTAIL_DEST/$dir"
+    mkdir -p "$PONYTAIL_DEST/$dir"
+    cp -R "$tmp/ponytail/$dir/." "$PONYTAIL_DEST/$dir/"
   fi
 done
 
